@@ -1,0 +1,2061 @@
+{
+  "title": "综合练习卷（单选 / 多选 / 判断 / 填空）",
+  "durationMinutes": 111,
+  "questions": [
+    {
+      "id": 1,
+      "type": "single",
+      "question": "世界上面积最大的海洋是哪一个？",
+      "options": [
+        "大西洋",
+        "太平洋",
+        "印度洋",
+        "北冰洋"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 2,
+      "type": "single",
+      "question": "光合作用主要吸收什么颜色的可见光波段？",
+      "options": [
+        "绿光",
+        "红光和蓝紫光",
+        "黄光",
+        "紫外光"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 3,
+      "type": "single",
+      "question": "《义勇军进行曲》的曲作者是谁？",
+      "options": [
+        "冼星海",
+        "聂耳",
+        "贺绿汀",
+        "吕骥"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 4,
+      "type": "single",
+      "question": "计算机中 1 个字节等于多少个二进制位？",
+      "options": [
+        "4 位",
+        "8 位",
+        "16 位",
+        "32 位"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 5,
+      "type": "single",
+      "question": "地球公转一周的时间大约是多少？",
+      "options": [
+        "一天",
+        "一个月",
+        "一年",
+        "十年"
+      ],
+      "answer": [
+        2
+      ]
+    },
+    {
+      "id": 6,
+      "type": "single",
+      "question": "元素周期表中符号 Au 代表哪种元素？",
+      "options": [
+        "银",
+        "铝",
+        "金",
+        "氩"
+      ],
+      "answer": [
+        2
+      ]
+    },
+    {
+      "id": 7,
+      "type": "single",
+      "question": "被称为“世界屋脊”的高原是哪一个？",
+      "options": [
+        "黄土高原",
+        "内蒙古高原",
+        "云贵高原",
+        "青藏高原"
+      ],
+      "answer": [
+        3
+      ]
+    },
+    {
+      "id": 8,
+      "type": "single",
+      "question": "HTTP 协议默认使用的端口号是多少？",
+      "options": [
+        "21",
+        "80",
+        "443",
+        "8080"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 9,
+      "type": "single",
+      "question": "“纸上得来终觉浅”的下一句是什么？",
+      "options": [
+        "绝知此事要躬行",
+        "为有源头活水来",
+        "病树前头万木春",
+        "柳暗花明又一村"
+      ],
+      "answer": [
+        0
+      ]
+    },
+    {
+      "id": 10,
+      "type": "single",
+      "question": "人体最大的器官是什么？",
+      "options": [
+        "肝脏",
+        "肺",
+        "皮肤",
+        "大脑"
+      ],
+      "answer": [
+        2
+      ]
+    },
+    {
+      "id": 11,
+      "type": "single",
+      "question": "二进制数 1010 对应的十进制数是多少？",
+      "options": [
+        "8",
+        "10",
+        "12",
+        "14"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 12,
+      "type": "single",
+      "question": "声波在下列哪种介质中传播速度最快？",
+      "options": [
+        "空气",
+        "水",
+        "钢铁",
+        "真空"
+      ],
+      "answer": [
+        2
+      ]
+    },
+    {
+      "id": 13,
+      "type": "multi",
+      "question": "下列哪些属于可再生能源？（多选）",
+      "options": [
+        "太阳能",
+        "风能",
+        "煤炭",
+        "水能"
+      ],
+      "answer": [
+        0,
+        1,
+        3
+      ]
+    },
+    {
+      "id": 14,
+      "type": "multi",
+      "question": "下列哪些是中国的传统节日？（多选）",
+      "options": [
+        "春节",
+        "圣诞节",
+        "中秋节",
+        "端午节"
+      ],
+      "answer": [
+        0,
+        2,
+        3
+      ]
+    },
+    {
+      "id": 15,
+      "type": "multi",
+      "question": "下列哪些属于哺乳动物？（多选）",
+      "options": [
+        "海豚",
+        "鲨鱼",
+        "蝙蝠",
+        "企鹅"
+      ],
+      "answer": [
+        0,
+        2
+      ]
+    },
+    {
+      "id": 16,
+      "type": "multi",
+      "question": "下列哪些是 Python 的合法变量名？（多选）",
+      "options": [
+        "_count",
+        "2value",
+        "my_var",
+        "class"
+      ],
+      "answer": [
+        0,
+        2
+      ]
+    },
+    {
+      "id": 17,
+      "type": "multi",
+      "question": "下列哪些发明出现在中国古代？（多选）",
+      "options": [
+        "指南针",
+        "造纸术",
+        "蒸汽机",
+        "印刷术"
+      ],
+      "answer": [
+        0,
+        1,
+        3
+      ]
+    },
+    {
+      "id": 18,
+      "type": "multi",
+      "question": "下列哪些气体在标准状况下是单质？（多选）",
+      "options": [
+        "氧气",
+        "二氧化碳",
+        "氮气",
+        "一氧化碳"
+      ],
+      "answer": [
+        0,
+        2
+      ]
+    },
+    {
+      "id": 19,
+      "type": "judge",
+      "question": "光年是时间单位。",
+      "options": [
+        "正确",
+        "错误"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 20,
+      "type": "judge",
+      "question": "水在标准大气压下的沸点是 100 摄氏度。",
+      "options": [
+        "正确",
+        "错误"
+      ],
+      "answer": [
+        0
+      ]
+    },
+    {
+      "id": 21,
+      "type": "judge",
+      "question": "CSS 用于描述网页的样式。",
+      "options": [
+        "正确",
+        "错误"
+      ],
+      "answer": [
+        0
+      ]
+    },
+    {
+      "id": 22,
+      "type": "judge",
+      "question": "月亮自身会发光。",
+      "options": [
+        "正确",
+        "错误"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 23,
+      "type": "judge",
+      "question": "维生素 C 又名抗坏血酸。",
+      "options": [
+        "正确",
+        "错误"
+      ],
+      "answer": [
+        0
+      ]
+    },
+    {
+      "id": 24,
+      "type": "judge",
+      "question": "世界上最高的山峰是珠穆朗玛峰。",
+      "options": [
+        "正确",
+        "错误"
+      ],
+      "answer": [
+        0
+      ]
+    },
+    {
+      "id": 25,
+      "type": "single",
+      "question": "Choose the correct answer: He ___ to school every day.",
+      "options": [
+        "go",
+        "goes",
+        "going",
+        "gone"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 26,
+      "type": "single",
+      "question": "Which word is a synonym of \"happy\"?",
+      "options": [
+        "sad",
+        "glad",
+        "angry",
+        "tired"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 27,
+      "type": "single",
+      "question": "I have lived here ___ 2010. 应填入的介词是？",
+      "options": [
+        "for",
+        "since",
+        "at",
+        "from"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 28,
+      "type": "single",
+      "question": "This box is ___ than that one.",
+      "options": [
+        "heavy",
+        "heavier",
+        "heaviest",
+        "more heavy"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 29,
+      "type": "single",
+      "question": "book 的复数形式正确的是？",
+      "options": [
+        "bookes",
+        "books",
+        "bookies",
+        "bookss"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 30,
+      "type": "single",
+      "question": "Which sentence is correct?",
+      "options": [
+        "She don't like tea.",
+        "She doesn't like tea.",
+        "She not like tea.",
+        "She no like tea."
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 31,
+      "type": "judge",
+      "question": "ran 是动词 run 的过去式。",
+      "options": [
+        "正确",
+        "错误"
+      ],
+      "answer": [
+        0
+      ]
+    },
+    {
+      "id": 32,
+      "type": "judge",
+      "question": "句子 What's the weather like? 是在询问天气。",
+      "options": [
+        "正确",
+        "错误"
+      ],
+      "answer": [
+        0
+      ]
+    },
+    {
+      "id": 33,
+      "type": "multi",
+      "question": "下列哪些单词表示水果？（多选）",
+      "options": [
+        "apple",
+        "carrot",
+        "banana",
+        "potato"
+      ],
+      "answer": [
+        0,
+        2
+      ]
+    },
+    {
+      "id": 34,
+      "type": "single",
+      "question": "the Great Wall 的中文意思是？",
+      "options": [
+        "长城",
+        "大墙",
+        "大运河",
+        "天坛"
+      ],
+      "answer": [
+        0
+      ]
+    },
+    {
+      "id": 35,
+      "type": "single",
+      "question": "12 × 8 = ？",
+      "options": [
+        "86",
+        "96",
+        "106",
+        "88"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 36,
+      "type": "single",
+      "question": "三角形的内角和是多少度？",
+      "options": [
+        "90°",
+        "180°",
+        "270°",
+        "360°"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 37,
+      "type": "single",
+      "question": "√144 = ？",
+      "options": [
+        "10",
+        "11",
+        "12",
+        "14"
+      ],
+      "answer": [
+        2
+      ]
+    },
+    {
+      "id": 38,
+      "type": "single",
+      "question": "一元二次方程 x² − 5x + 6 = 0 的较小根是？",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "6"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 39,
+      "type": "single",
+      "question": "0.25 用分数表示是多少？",
+      "options": [
+        "1/2",
+        "1/3",
+        "1/4",
+        "1/5"
+      ],
+      "answer": [
+        2
+      ]
+    },
+    {
+      "id": 40,
+      "type": "single",
+      "question": "圆的面积公式是？",
+      "options": [
+        "πd",
+        "2πr",
+        "πr²",
+        "πr"
+      ],
+      "answer": [
+        2
+      ]
+    },
+    {
+      "id": 41,
+      "type": "judge",
+      "question": "所有偶数都能被 2 整除。",
+      "options": [
+        "正确",
+        "错误"
+      ],
+      "answer": [
+        0
+      ]
+    },
+    {
+      "id": 42,
+      "type": "judge",
+      "question": "0 是自然数。",
+      "options": [
+        "正确",
+        "错误"
+      ],
+      "answer": [
+        0
+      ]
+    },
+    {
+      "id": 43,
+      "type": "multi",
+      "question": "下列哪些数是质数？（多选）",
+      "options": [
+        "2",
+        "9",
+        "11",
+        "15"
+      ],
+      "answer": [
+        0,
+        2
+      ]
+    },
+    {
+      "id": 44,
+      "type": "single",
+      "question": "3 的平方加上 4 的平方等于多少？",
+      "options": [
+        "25",
+        "49",
+        "24",
+        "7"
+      ],
+      "answer": [
+        0
+      ]
+    },
+    {
+      "id": 45,
+      "type": "single",
+      "question": "春眠不觉晓 的下一句是？",
+      "options": [
+        "处处闻啼鸟",
+        "花落知多少",
+        "夜来风雨声",
+        "疑是地上霜"
+      ],
+      "answer": [
+        0
+      ]
+    },
+    {
+      "id": 46,
+      "type": "single",
+      "question": "欲穷千里目 的下一句是？",
+      "options": [
+        "更上一层楼",
+        "黄河入海流",
+        "白日依山尽",
+        "一览众山小"
+      ],
+      "answer": [
+        0
+      ]
+    },
+    {
+      "id": 47,
+      "type": "single",
+      "question": "《西游记》的作者是谁？",
+      "options": [
+        "罗贯中",
+        "施耐庵",
+        "吴承恩",
+        "曹雪芹"
+      ],
+      "answer": [
+        2
+      ]
+    },
+    {
+      "id": 48,
+      "type": "single",
+      "question": "成语 画蛇添足 的意思是？",
+      "options": [
+        "多此一举",
+        "画技高超",
+        "雪中送炭",
+        "锦上添花"
+      ],
+      "answer": [
+        0
+      ]
+    },
+    {
+      "id": 49,
+      "type": "single",
+      "question": "的、地、得 三个字中，修饰动词时应该用？",
+      "options": [
+        "的",
+        "地",
+        "得",
+        "都可以"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 50,
+      "type": "judge",
+      "question": "散文《背影》的作者是朱自清。",
+      "options": [
+        "正确",
+        "错误"
+      ],
+      "answer": [
+        0
+      ]
+    },
+    {
+      "id": 51,
+      "type": "judge",
+      "question": "躲 字的部首是 身。",
+      "options": [
+        "正确",
+        "错误"
+      ],
+      "answer": [
+        0
+      ]
+    },
+    {
+      "id": 52,
+      "type": "multi",
+      "question": "下列哪些是唐代诗人？（多选）",
+      "options": [
+        "李白",
+        "苏轼",
+        "杜甫",
+        "李清照"
+      ],
+      "answer": [
+        0,
+        2
+      ]
+    },
+    {
+      "id": 53,
+      "type": "single",
+      "question": "却看妻子愁何在 中的 妻子 指的是？",
+      "options": [
+        "妻子和孩子",
+        "仅指妻子",
+        "母亲",
+        "仆人"
+      ],
+      "answer": [
+        0
+      ]
+    },
+    {
+      "id": 54,
+      "type": "single",
+      "question": "下列哪个句子使用了拟人的修辞手法？",
+      "options": [
+        "太阳升起来了。",
+        "太阳公公露出了笑脸。",
+        "太阳很热。",
+        "太阳是一颗恒星。"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 55,
+      "type": "blank",
+      "subject": "数学",
+      "question": "计算：12 × 8 = ____",
+      "answers": [
+        "96"
+      ]
+    },
+    {
+      "id": 56,
+      "type": "blank",
+      "subject": "数学",
+      "question": "三角形的内角和是 ____ 度",
+      "answers": [
+        "180"
+      ]
+    },
+    {
+      "id": 57,
+      "type": "blank",
+      "subject": "数学",
+      "question": "若 3x + 6 = 18，则 x = ____",
+      "answers": [
+        "4"
+      ]
+    },
+    {
+      "id": 58,
+      "type": "blank",
+      "subject": "数学",
+      "question": "等差数列 2, 5, 8, 11, … 的公差是 ____，第 5 项是 ____",
+      "answers": [
+        "3",
+        "14"
+      ]
+    },
+    {
+      "id": 59,
+      "type": "blank",
+      "subject": "数学",
+      "question": "一个正方体有 ____ 条棱，有 ____ 个顶点",
+      "answers": [
+        "12",
+        "8"
+      ]
+    },
+    {
+      "id": 60,
+      "type": "blank",
+      "subject": "英语",
+      "question": "The opposite of \"hot\" is ____.",
+      "answers": [
+        "cold"
+      ]
+    },
+    {
+      "id": 61,
+      "type": "blank",
+      "subject": "英语",
+      "question": "写出动词 go 的过去式：____",
+      "answers": [
+        "went"
+      ]
+    },
+    {
+      "id": 62,
+      "type": "blank",
+      "subject": "英语",
+      "question": "「苹果」的英文单词是 ____",
+      "answers": [
+        "apple"
+      ]
+    },
+    {
+      "id": 63,
+      "type": "blank",
+      "subject": "英语",
+      "question": "用 be 动词的正确形式填空：I ____ a student. She ____ a teacher.",
+      "answers": [
+        "am",
+        "is"
+      ]
+    },
+    {
+      "id": 64,
+      "type": "blank",
+      "subject": "英语",
+      "question": "Write the plural form: one box, two ____.",
+      "answers": [
+        "boxes"
+      ]
+    },
+    {
+      "id": 65,
+      "type": "blank",
+      "subject": "语文",
+      "question": "成语「守株待兔」出自《____》。",
+      "answers": [
+        "韩非子"
+      ]
+    },
+    {
+      "id": 66,
+      "type": "blank",
+      "subject": "语文",
+      "question": "补写诗句：洛阳亲友如相问，____。",
+      "answers": [
+        "一片冰心在玉壶"
+      ]
+    },
+    {
+      "id": 67,
+      "type": "blank",
+      "subject": "语文",
+      "question": "补写名句：____，每逢佳节倍思亲。",
+      "answers": [
+        "独在异乡为异客"
+      ]
+    },
+    {
+      "id": 68,
+      "type": "blank",
+      "subject": "语文",
+      "question": "《岳阳楼记》的作者是 ____。",
+      "answers": [
+        "范仲淹"
+      ]
+    },
+    {
+      "id": 69,
+      "type": "blank",
+      "subject": "语文",
+      "question": "补写《九月九日忆山东兄弟》：____，每逢佳节倍思亲。____，遍插茱萸少一人。",
+      "answers": [
+        "独在异乡为异客",
+        "遥知兄弟登高处"
+      ]
+    },
+    {
+      "id": 70,
+      "type": "single",
+      "subject": "数学",
+      "question": "下列各数中，是无理数的是哪一个？",
+      "options": [
+        "0.5",
+        "√2",
+        "22/7",
+        "-3"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 71,
+      "type": "single",
+      "subject": "数学",
+      "question": "自然对数的底 e 约等于下面哪个数？",
+      "options": [
+        "1.41",
+        "1.73",
+        "2.72",
+        "3.14"
+      ],
+      "answer": [
+        2
+      ]
+    },
+    {
+      "id": 72,
+      "type": "single",
+      "subject": "数学",
+      "question": "一个正方体有几条棱？",
+      "options": [
+        "6",
+        "8",
+        "12"
+      ],
+      "answer": [
+        2
+      ]
+    },
+    {
+      "id": 73,
+      "type": "multi",
+      "subject": "数学",
+      "question": "下列哪些是质数？（多选）",
+      "options": [
+        "2",
+        "3",
+        "11",
+        "15"
+      ],
+      "answer": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "id": 74,
+      "type": "multi",
+      "subject": "数学",
+      "question": "下列哪些数能被 2 整除？（多选）",
+      "options": [
+        "4",
+        "8",
+        "12",
+        "20"
+      ],
+      "answer": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": 75,
+      "type": "judge",
+      "subject": "数学",
+      "question": "0 是最小的自然数。",
+      "options": [
+        "正确",
+        "错误"
+      ],
+      "answer": [
+        0
+      ]
+    },
+    {
+      "id": 76,
+      "type": "single",
+      "subject": "英语",
+      "question": "Which word means \"quick\"?",
+      "options": [
+        "slow",
+        "fast",
+        "heavy",
+        "quiet"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 77,
+      "type": "single",
+      "subject": "英语",
+      "question": "Which is the correct spelling of the third month of the year?",
+      "options": [
+        "march",
+        "March",
+        "MARch",
+        "marchh"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 78,
+      "type": "multi",
+      "subject": "英语",
+      "question": "Which of the following are colors?（多选）",
+      "options": [
+        "red",
+        "blue",
+        "seven",
+        "green"
+      ],
+      "answer": [
+        0,
+        1,
+        3
+      ]
+    },
+    {
+      "id": 79,
+      "type": "judge",
+      "subject": "英语",
+      "question": "\"child\" 的复数形式是 \"childs\"。",
+      "options": [
+        "正确",
+        "错误"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 80,
+      "type": "single",
+      "subject": "语文",
+      "question": "「陈康肃公善射」中「善」的意思是？",
+      "options": [
+        "善良",
+        "擅长",
+        "好的",
+        "容易"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 81,
+      "type": "single",
+      "subject": "语文",
+      "question": "「月亮悄悄爬上了树梢」使用了哪种修辞手法？",
+      "options": [
+        "比喻",
+        "拟人",
+        "夸张",
+        "排比"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 82,
+      "type": "single",
+      "subject": "常识",
+      "question": "阅读下面这段话，回答问题：「水在自然界中不断循环。阳光照射使水面蒸发，水汽上升到高空遇冷凝结成小水滴或小冰晶，形成云。当这些小水滴或小冰晶增大到空气托不住时，就会以雨或雪的形式降落回地面。」这段话主要说明了什么？",
+      "options": [
+        "云的形成需要凝结核",
+        "水在自然界中的循环过程",
+        "降雨对人类生活的影响",
+        "太阳辐射的强弱变化"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 83,
+      "type": "single",
+      "subject": "常识",
+      "question": "下列关于「光年」的说法，哪一项是正确的？",
+      "options": [
+        "光年是时间单位，表示光走一年所需要的时间",
+        "光年是长度单位，表示光在一年中传播的距离",
+        "光年是速度单位，表示光一年中的平均速度",
+        "光年是天文学中用来表示恒星年龄的单位"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 84,
+      "type": "single",
+      "subject": "常识",
+      "question": "在 HTML 中，<div> 这种写法的尖括号符号叫什么？",
+      "options": [
+        "<",
+        ">",
+        "&",
+        "#"
+      ],
+      "answer": [
+        0
+      ]
+    },
+    {
+      "id": 85,
+      "type": "multi",
+      "subject": "常识",
+      "question": "下列哪些属于中国古代四大发明？（多选）",
+      "options": [
+        "造纸术",
+        "指南针",
+        "火药",
+        "印刷术",
+        "地动仪"
+      ],
+      "answer": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": 86,
+      "type": "blank",
+      "subject": "数学",
+      "question": "等差数列 3, 7, 11, 15, … ：公差是 ____，第 6 项是 ____，第 10 项是 ____，前 5 项之和是 ____，前 10 项之和是 ____",
+      "answers": [
+        "4",
+        "23",
+        "39",
+        "55",
+        "210"
+      ]
+    },
+    {
+      "id": 87,
+      "type": "blank",
+      "subject": "数学",
+      "question": "计算：1/2 + 1/3 = ____；1/2 - 1/3 = ____；1/2 × 1/3 = ____；1/2 ÷ 1/3 = ____；1/2 的倒数是 ____；1/2 的平方是 ____",
+      "answers": [
+        "5/6",
+        "1/6",
+        "1/6",
+        "3/2",
+        "2",
+        "1/4"
+      ]
+    },
+    {
+      "id": 88,
+      "type": "blank",
+      "subject": "数学",
+      "question": "一个长方体的长、宽、高分别为 5、4、3：棱长总和是 ____，表面积是 ____，体积是 ____，它有 ____ 个顶点、____ 条棱、____ 个面",
+      "answers": [
+        "48",
+        "94",
+        "60",
+        "8",
+        "12",
+        "6"
+      ]
+    },
+    {
+      "id": 89,
+      "type": "blank",
+      "subject": "数学",
+      "question": "解一元二次方程 x² - 5x + 6 = 0：判别式 Δ = ____，较小的根 x1 = ____，较大的根 x2 = ____，两根之和 = ____，两根之积 = ____",
+      "answers": [
+        "1",
+        "2",
+        "3",
+        "5",
+        "6"
+      ]
+    },
+    {
+      "id": 90,
+      "type": "blank",
+      "subject": "数学",
+      "question": "某商品原价 200 元：先涨价 10% 后是 ____ 元；再打八折后是 ____ 元；最后涨价 25% 后是 ____ 元。最终价格比原价上涨了 ____ 元，涨幅为 ____%",
+      "answers": [
+        "220",
+        "176",
+        "220",
+        "20",
+        "10"
+      ]
+    },
+    {
+      "id": 91,
+      "type": "blank",
+      "subject": "数学",
+      "question": "把 3/8 化成小数是 ____；把 0.45 化成最简分数是 ____/____；3/8 的百分数是 ____%；0.45 的百分数是 ____%",
+      "answers": [
+        "0.375",
+        "9",
+        "20",
+        "37.5",
+        "45"
+      ]
+    },
+    {
+      "id": 92,
+      "type": "blank",
+      "subject": "英语",
+      "question": "用动词的正确形式填空：She ____ (go) to school every day. Yesterday she ____ (go) there by bus. Tomorrow she ____ (go) there again. She has ____ (be) ill for three days. Look! She ____ (run) on the playground now. She ____ (finish) her homework already.",
+      "answers": [
+        "goes",
+        "went",
+        "will go",
+        "been",
+        "is running",
+        "has finished"
+      ]
+    },
+    {
+      "id": 93,
+      "type": "blank",
+      "subject": "英语",
+      "question": "写出下列形容词的比较级和最高级：good → ____ / ____；bad → ____ / ____；many → ____ / ____",
+      "answers": [
+        "better",
+        "best",
+        "worse",
+        "worst",
+        "more",
+        "most"
+      ]
+    },
+    {
+      "id": 94,
+      "type": "blank",
+      "subject": "英语",
+      "question": "用正确的介词填空：I was born ____ 1998. The class begins ____ 8 o'clock. She is good ____ math. He is interested ____ music. They arrived ____ Beijing yesterday. Thank you ____ your help.",
+      "answers": [
+        "in",
+        "at",
+        "at",
+        "in",
+        "in",
+        "for"
+      ]
+    },
+    {
+      "id": 95,
+      "type": "blank",
+      "subject": "语文",
+      "question": "补写《陋室铭》：山不在高，____。水不在深，____。斯是陋室，____。苔痕上阶绿，____。谈笑有鸿儒，____。可以调素琴，____。无丝竹之乱耳，____。南阳诸葛庐，____。",
+      "answers": [
+        "有仙则名",
+        "有龙则灵",
+        "惟吾德馨",
+        "草色入帘青",
+        "往来无白丁",
+        "阅金经",
+        "无案牍之劳形",
+        "西蜀子云亭"
+      ]
+    },
+    {
+      "id": 96,
+      "type": "blank",
+      "subject": "语文",
+      "question": "补写《岳阳楼记》名句：不以物喜，____；居庙堂之高则忧其民，____。是进亦忧，退亦忧。然则何时而乐耶？其必曰「____，____」乎！",
+      "answers": [
+        "不以己悲",
+        "处江湖之远则忧其君",
+        "先天下之忧而忧",
+        "后天下之乐而乐"
+      ]
+    },
+    {
+      "id": 97,
+      "type": "blank",
+      "subject": "语文",
+      "question": "四大名著常识：《红楼梦》的作者是 ____；《西游记》的作者是 ____；《水浒传》的作者是 ____；《三国演义》的作者是 ____；这四部书合称 ____。",
+      "answers": [
+        "曹雪芹",
+        "吴承恩",
+        "施耐庵",
+        "罗贯中",
+        "四大名著"
+      ]
+    },
+    {
+      "id": 98,
+      "type": "single",
+      "subject": "数学",
+      "question": "在下列实数中，哪一个属于无理数？",
+      "options": [
+        "22/7",
+        "√9",
+        "√2",
+        "1/3",
+        "-5",
+        "3.14",
+        "∛27",
+        "0"
+      ],
+      "answer": [
+        2
+      ]
+    },
+    {
+      "id": 99,
+      "type": "single",
+      "subject": "数学",
+      "question": "下列各数中，数值最小的是哪一个？",
+      "options": [
+        "2 的 -3 次方",
+        "3 的 -2 次方",
+        "4 的 -1 次方",
+        "5 的 0 次方",
+        "1/2 的平方",
+        "2/7",
+        "0.3",
+        "1/3"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 100,
+      "type": "single",
+      "subject": "计算机",
+      "question": "下列哪种数据结构遵循「先进先出」原则？",
+      "options": [
+        "栈",
+        "队列",
+        "树",
+        "图",
+        "堆",
+        "哈希表"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 101,
+      "type": "single",
+      "subject": "计算机",
+      "question": "在 Python 中，下列哪个运算符表示「整除」（向下取整的除法）？",
+      "options": [
+        "/",
+        "//",
+        "%",
+        "**",
+        "++",
+        "|"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 102,
+      "type": "single",
+      "subject": "常识",
+      "question": "下列哪位科学家因提出「测不准原理」而闻名？",
+      "options": [
+        "爱因斯坦",
+        "玻尔",
+        "海森堡",
+        "薛定谔",
+        "狄拉克",
+        "普朗克",
+        "费曼"
+      ],
+      "answer": [
+        2
+      ]
+    },
+    {
+      "id": 103,
+      "type": "multi",
+      "subject": "常识",
+      "question": "下列哪些是中国的直辖市？（多选）",
+      "options": [
+        "北京",
+        "上海",
+        "天津",
+        "重庆",
+        "广州",
+        "深圳",
+        "南京"
+      ],
+      "answer": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": 104,
+      "type": "multi",
+      "subject": "计算机",
+      "question": "下列哪些属于 HTTP 的请求方法？（多选）",
+      "options": [
+        "GET",
+        "POST",
+        "PUSH",
+        "DELETE",
+        "PATCH",
+        "FETCH",
+        "HEAD",
+        "SEND"
+      ],
+      "answer": [
+        0,
+        1,
+        3,
+        4,
+        6
+      ]
+    },
+    {
+      "id": 105,
+      "type": "multi",
+      "subject": "计算机",
+      "question": "下列哪些属于关系型数据库？（多选）",
+      "options": [
+        "MySQL",
+        "PostgreSQL",
+        "Oracle",
+        "SQL Server",
+        "Redis",
+        "MongoDB",
+        "SQLite",
+        "Neo4j"
+      ],
+      "answer": [
+        0,
+        1,
+        2,
+        3,
+        6
+      ]
+    },
+    {
+      "id": 106,
+      "type": "multi",
+      "subject": "计算机",
+      "question": "下列关于 TCP 与 UDP 的说法，哪些是正确的？（多选）",
+      "options": [
+        "TCP 是面向连接的，UDP 是无连接的",
+        "TCP 保证数据按序到达，UDP 不保证",
+        "UDP 一定比 TCP 可靠",
+        "TCP 建立连接需要三次握手",
+        "UDP 的首部开销比 TCP 小",
+        "TCP 不能用于实时音视频传输"
+      ],
+      "answer": [
+        0,
+        1,
+        3,
+        4
+      ]
+    },
+    {
+      "id": 107,
+      "type": "blank",
+      "subject": "地理",
+      "question": "世界上面积最大的海洋是 ____，面积最大的沙漠是 ____，最长的河流是 ____",
+      "answers": [
+        "太平洋",
+        "撒哈拉沙漠",
+        "尼罗河"
+      ]
+    },
+    {
+      "id": 108,
+      "type": "blank",
+      "subject": "地理",
+      "question": "我国最长的河流是 ____，最大的淡水湖是 ____，最大的咸水湖是 ____，最大的岛屿是 ____，面积最大的省级行政区是 ____",
+      "answers": [
+        "长江",
+        "鄱阳湖",
+        "青海湖",
+        "台湾岛",
+        "新疆维吾尔自治区"
+      ]
+    },
+    {
+      "id": 109,
+      "type": "blank",
+      "subject": "地理",
+      "question": "地球的平均半径约为 ____ 千米，赤道周长约为 ____ 千米；本初子午线是 ____ 度经线，东西半球的分界线是 ____ 和 160°E",
+      "answers": [
+        "6371",
+        "40000",
+        "0",
+        "20°W"
+      ]
+    },
+    {
+      "id": 110,
+      "type": "blank",
+      "subject": "地理",
+      "question": "我国四大高原是 ____、____、____ 和 ____；四大盆地中面积最大的是 ____",
+      "answers": [
+        "青藏高原",
+        "内蒙古高原",
+        "黄土高原",
+        "云贵高原",
+        "塔里木盆地"
+      ]
+    },
+    {
+      "id": 111,
+      "type": "blank",
+      "subject": "生物",
+      "question": "细胞进行有氧呼吸的主要场所是 ____，蛋白质的合成场所是 ____，植物细胞进行光合作用的场所是 ____，控制遗传的物质主要存在于 ____",
+      "answers": [
+        "线粒体",
+        "核糖体",
+        "叶绿体",
+        "细胞核"
+      ]
+    },
+    {
+      "id": 112,
+      "type": "blank",
+      "subject": "生物",
+      "question": "人体的血液循环分为 ____ 和 ____ 两条途径；体循环的起点是 ____，肺循环的起点是 ____",
+      "answers": [
+        "体循环",
+        "肺循环",
+        "左心室",
+        "右心室"
+      ]
+    },
+    {
+      "id": 113,
+      "type": "blank",
+      "subject": "生物",
+      "question": "生态系统中的生物成分包括 ____、____ 和 ____；其中绿色植物属于 ____，细菌和真菌属于 ____",
+      "answers": [
+        "生产者",
+        "消费者",
+        "分解者",
+        "生产者",
+        "分解者"
+      ]
+    },
+    {
+      "id": 114,
+      "type": "blank",
+      "subject": "生物",
+      "question": "人体的消化系统中，最大的消化腺是 ____，消化和吸收的主要器官是 ____；血液中运输氧气的是 ____，具有止血凝血功能的是 ____",
+      "answers": [
+        "肝脏",
+        "小肠",
+        "红细胞",
+        "血小板"
+      ]
+    },
+    {
+      "id": 115,
+      "type": "blank",
+      "subject": "计算机",
+      "question": "在计算机中，1 字节等于 ____ 位；1 KB 等于 ____ 字节；1 MB 等于 ____ KB",
+      "answers": [
+        "8",
+        "1024",
+        "1024"
+      ]
+    },
+    {
+      "id": 116,
+      "type": "blank",
+      "subject": "计算机",
+      "question": "在 Python 中，表达式 7 // 2 的值是 ____，7 % 3 的值是 ____，2 ** 3 的值是 ____",
+      "answers": [
+        "3",
+        "1",
+        "8"
+      ]
+    },
+    {
+      "id": 117,
+      "type": "blank",
+      "subject": "计算机",
+      "question": "在 Excel 中，若 A1=10、A2=20、A3=30，则 =SUM(A1:A3) 的值是 ____，=AVERAGE(A1:A3) 的值是 ____，=MAX(A1:A3) 的值是 ____",
+      "answers": [
+        "60",
+        "20",
+        "30"
+      ]
+    },
+    {
+      "id": 118,
+      "type": "blank",
+      "subject": "计算机",
+      "question": "在计算机网络中，HTTP 协议默认端口是 ____，HTTPS 协议默认端口是 ____；IPv4 地址由 ____ 位二进制数组成，IPv6 地址由 ____ 位组成",
+      "answers": [
+        "80",
+        "443",
+        "32",
+        "128"
+      ]
+    },
+    {
+      "id": 119,
+      "type": "blank",
+      "subject": "语文",
+      "question": "我国第一部纪传体通史是《____》，作者是 ____；第一部编年体通史是《____》，作者是 ____",
+      "answers": [
+        "史记",
+        "司马迁",
+        "资治通鉴",
+        "司马光"
+      ]
+    },
+    {
+      "id": 120,
+      "type": "blank",
+      "subject": "语文",
+      "question": "我国四大发明是 ____、____、____ 和 ____",
+      "answers": [
+        "造纸术",
+        "指南针",
+        "火药",
+        "印刷术"
+      ]
+    },
+    {
+      "id": 121,
+      "type": "single",
+      "subject": "常识",
+      "question": "下列哪个行星离太阳最近？",
+      "options": [
+        "水星",
+        "金星",
+        "地球"
+      ],
+      "answer": [
+        0
+      ]
+    },
+    {
+      "id": 122,
+      "type": "single",
+      "subject": "地理",
+      "question": "下列哪个国家位于南半球？",
+      "options": [
+        "澳大利亚",
+        "加拿大",
+        "俄罗斯"
+      ],
+      "answer": [
+        0
+      ]
+    },
+    {
+      "id": 123,
+      "type": "single",
+      "subject": "生物",
+      "question": "下列哪种动物属于哺乳动物？",
+      "options": [
+        "鲸",
+        "鲨鱼",
+        "鳄鱼"
+      ],
+      "answer": [
+        0
+      ]
+    },
+    {
+      "id": 124,
+      "type": "multi",
+      "subject": "常识",
+      "question": "下列能源中，哪些属于可再生能源？（多选）",
+      "options": [
+        "太阳能",
+        "风能",
+        "煤炭",
+        "水能",
+        "石油"
+      ],
+      "answer": [
+        0,
+        1,
+        3
+      ]
+    },
+    {
+      "id": 125,
+      "type": "multi",
+      "subject": "常识",
+      "question": "下列哪些是中国的经济特区？（多选）",
+      "options": [
+        "深圳",
+        "珠海",
+        "汕头",
+        "厦门",
+        "海南",
+        "大连"
+      ],
+      "answer": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "id": 126,
+      "type": "multi",
+      "subject": "计算机",
+      "question": "下列哪些属于计算机的输入设备？（多选）",
+      "options": [
+        "键盘",
+        "鼠标",
+        "扫描仪",
+        "打印机",
+        "显示器"
+      ],
+      "answer": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "id": 127,
+      "type": "single",
+      "subject": "地理",
+      "question": "下列关于“内流河”的说法，哪一项是正确的？",
+      "options": [
+        "内流河是指最终流入海洋的河流，水量一般比较丰富",
+        "内流河是指最终没有流入海洋的河流，多分布在干旱的内陆地区",
+        "内流河是指流经多个国家的国际性河流，水量随季节变化明显",
+        "内流河是指人工开挖的运河，主要用于农业灌溉和航运"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 128,
+      "type": "single",
+      "subject": "生物",
+      "question": "下列关于“光合作用”的说法，哪一项是正确的？",
+      "options": [
+        "光合作用只在夜间进行，白天植物只进行呼吸作用释放二氧化碳",
+        "光合作用把光能转变成化学能储存在有机物中，同时释放氧气",
+        "光合作用只发生在动物的细胞中，植物不能进行光合作用",
+        "光合作用消耗有机物并释放能量，是生物的共同特征之一"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 129,
+      "type": "single",
+      "subject": "地理",
+      "question": "下列关于“洋流”的说法，哪一项是正确的？",
+      "options": [
+        "洋流只会影响海水温度，对沿岸气候和航海没有任何影响",
+        "洋流能调节全球热量分布，暖流增温增湿，寒流降温减湿",
+        "洋流都是由于月球引力引起的，与盛行风向完全无关",
+        "洋流只分布在大洋表层，深层海水始终保持静止不动"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 130,
+      "type": "single",
+      "subject": "地理",
+      "question": "阅读下面这段材料，回答问题：「内流河多分布在干旱的内陆地区，降水稀少，河流的水源主要来自高山冰雪融水和山地降水。夏季气温升高，冰雪融化量大，河流水量随之增大；冬季气温降低，冰雪封冻，河流水量减少甚至断流。」由此可知，内流河的水量变化主要取决于什么？",
+      "options": [
+        "降水量的季节变化",
+        "气温高低导致的冰雪融化量",
+        "沿岸工农业用水量",
+        "河流的长度和流域面积"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 131,
+      "type": "single",
+      "subject": "生物",
+      "question": "阅读下面这段材料，回答问题：「人体内的血管分为动脉、静脉和毛细血管三类。动脉把血液从心脏输送到身体各处，管壁较厚、弹性大；静脉把血液从身体各处送回心脏，管壁较薄、弹性小，内有静脉瓣；毛细血管连通最小的动脉和静脉，管壁极薄。」据此，血液从心脏流向身体各处时经过的血管是？",
+      "options": [
+        "动脉",
+        "静脉",
+        "毛细血管",
+        "淋巴管"
+      ],
+      "answer": [
+        0
+      ]
+    },
+    {
+      "id": 132,
+      "type": "single",
+      "subject": "计算机",
+      "question": "阅读下面这段材料，回答问题：「在计算机网络中，IP 地址用于标识网络中的设备。IPv4 地址长度为 32 位，通常用点分十进制表示，如 192.168.1.1。随着联网设备数量激增，IPv4 地址逐渐枯竭，IPv6 地址长度扩大到 128 位，可以提供几乎用之不竭的地址空间。」根据材料，IPv6 地址长度是 IPv4 的多少倍？",
+      "options": [
+        "2 倍",
+        "4 倍",
+        "8 倍",
+        "16 倍"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 133,
+      "type": "single",
+      "subject": "常识",
+      "question": "阅读下面这段材料，回答问题：「光在真空中的传播速度约为 3×10⁸ m/s，是自然界中速度的极限。光在介质中的传播速度会变小，因此当光从空气斜射入水中时，传播方向会发生改变，这种现象叫做折射。折射使得水中的物体看起来比实际位置要浅。」根据材料，水中的物体看起来比实际位置浅，是因为？",
+      "options": [
+        "光在水中被吸收了",
+        "光在水面发生了折射",
+        "水的温度比空气高",
+        "光在水中的速度更大"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 134,
+      "type": "single",
+      "subject": "生物",
+      "question": "综合来看，下列哪种做法最有利于保护生物多样性？",
+      "options": [
+        "大量引进外来物种以丰富本地的物种数量，提高生态系统的稳定性",
+        "建立自然保护区，保护生物的栖息环境，禁止乱捕滥猎和乱砍滥伐",
+        "把所有野生动物都迁入动物园和繁育中心，实行人工圈养和繁育",
+        "优先发展经济，等经济水平提高以后再考虑生态环境保护问题"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 135,
+      "type": "single",
+      "subject": "地理",
+      "question": "下列关于我国四大高原特征的描述，正确的是哪一项？ A. 青藏高原是世界上海拔最高的高原，被称为“世界屋脊” B. 内蒙古高原地表崎岖，喀斯特地貌广布 C. 黄土高原水土流失轻微，地表平坦开阔 D. 云贵高原地势平坦，是重要的商品粮基地",
+      "options": [
+        "青藏高原是世界上海拔最高的高原，被称为“世界屋脊”",
+        "内蒙古高原地表崎岖，喀斯特地貌广布",
+        "黄土高原水土流失轻微，地表平坦开阔",
+        "云贵高原地势平坦，是重要的商品粮基地"
+      ],
+      "answer": [
+        0
+      ]
+    },
+    {
+      "id": 136,
+      "type": "single",
+      "subject": "地理",
+      "question": "（下拉选择）请选择我国面积最大的省级行政区：",
+      "options": [
+        "新疆维吾尔自治区",
+        "西藏自治区",
+        "内蒙古自治区",
+        "青海省"
+      ],
+      "answer": [
+        0
+      ]
+    },
+    {
+      "id": 137,
+      "type": "single",
+      "subject": "常识",
+      "question": "（矩阵题·第1行）请评价“该城市的气候特点是四季分明”：",
+      "options": [
+        "完全同意",
+        "比较同意",
+        "不太同意",
+        "完全不同意"
+      ],
+      "answer": [
+        0
+      ]
+    },
+    {
+      "id": 138,
+      "type": "single",
+      "subject": "常识",
+      "question": "（矩阵题·第2行）请评价“该城市交通便利，出行方便”：",
+      "options": [
+        "完全同意",
+        "比较同意",
+        "不太同意",
+        "完全不同意"
+      ],
+      "answer": [
+        0
+      ]
+    },
+    {
+      "id": 139,
+      "type": "judge",
+      "subject": "生物",
+      "question": "鲸鱼是哺乳动物，用肺呼吸。",
+      "options": [
+        "正确",
+        "错误"
+      ],
+      "answer": [
+        0
+      ]
+    },
+    {
+      "id": 140,
+      "type": "judge",
+      "subject": "生物",
+      "question": "所有的细菌对人体都是有害的。",
+      "options": [
+        "正确",
+        "错误"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 141,
+      "type": "judge",
+      "subject": "地理",
+      "question": "我国最长的河流是黄河。",
+      "options": [
+        "正确",
+        "错误"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 142,
+      "type": "judge",
+      "subject": "地理",
+      "question": "地球公转产生了昼夜交替现象。",
+      "options": [
+        "正确",
+        "错误"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 143,
+      "type": "judge",
+      "subject": "计算机",
+      "question": "IPv4 地址由 32 位二进制数组成。",
+      "options": [
+        "正确",
+        "错误"
+      ],
+      "answer": [
+        0
+      ]
+    },
+    {
+      "id": 144,
+      "type": "judge",
+      "subject": "计算机",
+      "question": "在 Excel 中，$A$1 表示相对引用。",
+      "options": [
+        "正确",
+        "错误"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 145,
+      "type": "judge",
+      "subject": "电工",
+      "question": "发现有人触电时，应首先用手把触电者拉开。",
+      "options": [
+        "正确",
+        "错误"
+      ],
+      "answer": [
+        1
+      ]
+    },
+    {
+      "id": 146,
+      "type": "judge",
+      "subject": "电工",
+      "question": "灭火器上的压力表指针指向绿区表示压力正常。",
+      "options": [
+        "正确",
+        "错误"
+      ],
+      "answer": [
+        0
+      ]
+    },
+    {
+      "id": 147,
+      "type": "multi",
+      "subject": "常识",
+      "question": "下列哪些属于我国的直辖市？（多选）",
+      "options": [
+        "北京",
+        "天津",
+        "上海",
+        "重庆"
+      ],
+      "answer": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": 148,
+      "type": "multi",
+      "subject": "生物",
+      "question": "下列动物中，哪些属于哺乳动物？（多选）",
+      "options": [
+        "鲸",
+        "蝙蝠",
+        "穿山甲",
+        "海豚"
+      ],
+      "answer": [
+        0,
+        1,
+        2,
+        3
+      ]
+    }
+  ]
+}

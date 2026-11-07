@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+  /* 暖砂琥珀 */
+  :root {
+    --c-canvas: #FBF6EC; --c-surface: #FFFDF8; --c-surface-2: #F7F0E2; --c-surface-3: #F1E7D4;
+    --c-line: #E7DBC3; --c-line-2: #D3C19E;
+    --c-ink-1: #241C10; --c-ink-2: #4A3F2C; --c-ink-3: #77683F; --c-ink-4: #9B8B6C;
+    --c-accent: #B4690E; --c-on-accent: #FFFFFF; --c-accent-soft: #FBEBD2; --c-accent-line: #EBCBA0;
+    --c-warn: #9A5B0B; --c-warn-soft: #FCEFD6; --c-warn-line: #E9D3A4;
+    --c-danger: #B3261E; --c-danger-soft: #FBE7E5; --c-danger-line: #EFC0BC;
+    --sh-1: 0 1px 2px rgba(90,70,35,.07);
+    --sh-2: 0 3px 10px -2px rgba(90,70,35,.12);
+    --sh-3: 0 20px 46px -14px rgba(90,70,35,.30), 0 2px 6px rgba(90,70,35,.08);
+    --scrim: rgba(36,28,16,.48);
+    --r-sm: 8px; --r-md: 12px; --r-lg: 18px; --r-xl: 24px;
+    --font-sans: "PingFang SC", "Microsoft YaHei", "HarmonyOS Sans SC",
+                 -apple-system, "Segoe UI", system-ui, sans-serif;
+    --font-display: "Songti SC", "STSong", "SimSun", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  [hidden] { display: none !important; }
+  body { width: 330px; max-width: 100vw; font-family: var(--font-sans);
+         background: var(--c-canvas); color: var(--c-ink-1); color-scheme: light;
+         -webkit-font-smoothing: antialiased; }
+  .aa-popup { display: flex; flex-direction: column; width: 330px; height: 600px;
+              background: var(--c-canvas); }
+  .ico { width: 14px; height: 14px; flex: none; display: inline-block; vertical-align: -2px; }
+
+  /* 头部 */
+  .aa-pop-head { display: flex; align-items: center; gap: 8px; flex: none;
+                 padding: 11px 14px; background: var(--c-surface);
+                 border-bottom: 1px solid var(--c-line); }
+  .aa-mark { width: 28px; height: 28px; border-radius: 9px; flex: none;
+             display: block; object-fit: contain;
+             box-shadow: 0 2px 6px rgba(180,105,14,.20); }
+  .aa-pop-title { display: flex; align-items: center; gap: 6px; min-width: 0;
+                  font-family: var(--font-display); font-size: 16px; font-weight: 700;
+                  color: var(--c-ink-1); letter-spacing: .01em; white-space: nowrap; }
+  .aa-ver { flex: none; font-family: var(--font-mono); font-size: 9.5px; font-weight: 500;
+            color: var(--c-ink-4); border: 1px solid var(--c-line); border-radius: 999px;
+            padding: 0 6px; line-height: 15px; }
+  .aa-spacer { flex: 1 1 auto; min-width: 4px; }
+  .aa-link { flex: none; font-size: 11.5px; color: var(--c-ink-3); text-decoration: none; }
+  .aa-link:hover { color: var(--c-accent); text-decoration: underline; }
+
+  /* 站点状态卡 */
+  .aa-site { flex: none; margin: 10px 12px 0; padding: 10px 12px;
+             background: var(--c-surface); border: 1px solid var(--c-line);
+             border-radius: var(--r-lg); box-shadow: var(--sh-1); }
+  .aa-site-row { display: flex; align-items: center; gap: 7px; }
+  .aa-dot { width: 6px; height: 6px; border-radius: 50%; flex: none; background: var(--c-ink-4); }
+  .aa-dot.ok { background: var(--c-accent); }
+  .aa-dot.warn { background: var(--c-warn); }
+  .aa-dot.bad { background: var(--c-danger); }
+  .aa-site-host { min-width: 0; font-family: var(--font-mono); font-size: 11.5px;
+                  color: var(--c-ink-1); white-space: nowrap; overflow: hidden;
+                  text-overflow: ellipsis; }
+  .aa-badge { display: inline-flex; align-items: center; flex: none; margin-left: auto;
+              padding: 1px 8px; border-radius: 999px; font-size: 10.5px; font-weight: 600;
+              white-space: nowrap; }
+  .aa-badge.accent { background: var(--c-accent-soft); color: var(--c-accent);
+                     border: 1px solid var(--c-accent-line); }
+  .aa-badge.warn { background: var(--c-warn-soft); color: var(--c-warn);
+                   border: 1px solid var(--c-warn-line); }
+  .aa-badge.muted { background: var(--c-surface-2); color: var(--c-ink-4);
+                    border: 1px solid var(--c-line); }
+  .aa-site-meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+                  margin-top: 9px; padding-top: 9px; border-top: 1px solid var(--c-line); }
+  .aa-site-meta div { display: flex; flex-direction: column; gap: 1px; }
+  .aa-site-meta b { font-family: var(--font-mono); font-size: 15px; font-weight: 600;
+                    line-height: 1.1; color: var(--c-ink-1); }
+  .aa-site-meta span { font-size: 10.5px; color: var(--c-ink-4); }
+
+  /* 标签页 */
+  .aa-tabs { display: flex; align-items: stretch; gap: 2px; flex: none;
+             margin: 10px 12px 0; border-bottom: 1px solid var(--c-line); }
+  .aa-tabs button { position: relative; padding: 7px 12px 9px; border: 0; background: transparent;
+                    color: var(--c-ink-3); font-family: var(--font-sans); font-size: 12.5px;
+                    font-weight: 600; cursor: pointer; }
+  .aa-tabs button:hover { color: var(--c-ink-1); }
+  .aa-tabs button[aria-selected="true"] { color: var(--c-ink-1); }
+  .aa-tabs button[aria-selected="true"]::after {
+    content: ""; position: absolute; left: 10px; right: 10px; bottom: -1px;
+    height: 2px; border-radius: 2px; background: var(--c-accent); }
+
+  /* 内容区 */
+  .aa-pop-body { flex: 1 1 auto; min-height: 240px; overflow-y: auto; padding: 11px 14px 14px;
+                 scrollbar-width: thin; scrollbar-color: var(--c-line-2) transparent; }
+  .aa-pop-body::-webkit-scrollbar { width: 6px; }
+  .aa-pop-body::-webkit-scrollbar-thumb { background: var(--c-line-2); border-radius: 3px; }
+  .aa-stack { display: flex; flex-direction: column; gap: 10px; }
+  .aa-field { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+  .aa-label { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap;
+              font-family: var(--font-display); font-size: 12.5px; font-weight: 700;
+              color: var(--c-ink-2); letter-spacing: .01em; }
+  .aa-hint { font-family: var(--font-sans); font-size: 10.5px; font-weight: 400;
+             color: var(--c-ink-4); }
+  .aa-note { font-size: 10.5px; line-height: 1.6; color: var(--c-ink-4); }
+  .aa-note b { color: var(--c-ink-2); }
+  .aa-divider { height: 1px; background: var(--c-line); margin: 2px 0; }
+  .aa-group-title { font-family: var(--font-display); font-size: 12px; font-weight: 700;
+                    letter-spacing: .04em; color: var(--c-ink-4); }
+  .aa-group { padding: 10px 11px; background: var(--c-surface-2); border: 1px solid var(--c-line);
+              border-radius: var(--r-md); display: flex; flex-direction: column; gap: 6px; }
+
+  .aa-input, select, input[type="text"], input[type="password"], input[type="number"] {
+    width: 100%; padding: 7px 9px; border: 1px solid var(--c-line-2); border-radius: var(--r-sm);
+    background: var(--c-surface); color: var(--c-ink-1); font-family: inherit; font-size: 12.5px;
+    outline: none; transition: border-color .15s, box-shadow .15s; }
+  .aa-input.mono { font-family: var(--font-mono); font-size: 11.5px; }
+  .aa-input:hover, select:hover, input[type="text"]:hover, input[type="password"]:hover,
+  input[type="number"]:hover { border-color: var(--c-ink-4); }
+  .aa-input:focus, select:focus, input[type="text"]:focus, input[type="password"]:focus,
+  input[type="number"]:focus { border-color: var(--c-accent); box-shadow: 0 0 0 3px rgba(180,105,14,.14); }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+  select.aa-native { position: absolute; width: 1px; height: 1px; padding: 0; opacity: 0;
+                     pointer-events: none; }
+  .aa-row { display: flex; gap: 7px; align-items: center; }
+  .aa-row > .aa-input { flex: 1 1 auto; min-width: 0; }
+  #fetchModels { flex: none; }
+
+  /* 分段控件 */
+  .aa-seg { display: flex; gap: 3px; padding: 3px; background: var(--c-surface-2);
+            border: 1px solid var(--c-line); border-radius: 10px; }
+  .aa-seg button { flex: 1 1 0; min-width: 0; padding: 4px 3px 5px; border: 1px solid transparent;
+                   border-radius: 7px; background: transparent; color: var(--c-ink-3);
+                   font-family: var(--font-sans); font-size: 11.5px; font-weight: 600;
+                   line-height: 1.35; cursor: pointer; text-align: center; }
+  .aa-seg button small { display: block; margin-top: 1px; font-size: 9.5px; font-weight: 400;
+                         color: var(--c-ink-4); }
+  .aa-seg button:hover { color: var(--c-ink-1); }
+  .aa-seg button[aria-pressed="true"] { background: var(--c-surface); color: var(--c-accent);
+                                        border-color: var(--c-accent-line);
+                                        box-shadow: 0 1px 3px rgba(90,70,35,.10); }
+  .aa-seg button[aria-pressed="true"] small { color: var(--c-accent); }
+
+  /* 步进器 */
+  .aa-grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
+  .aa-stepper { display: flex; align-items: center; padding: 2px; background: var(--c-surface);
+                border: 1px solid var(--c-line-2); border-radius: var(--r-sm); }
+  .aa-stepper button { width: 28px; height: 28px; flex: none; border: 0; border-radius: 6px;
+                       background: transparent; color: var(--c-ink-3); font-size: 15px;
+                       line-height: 1; cursor: pointer; }
+  .aa-stepper button:hover { background: var(--c-surface-2); color: var(--c-ink-1); }
+  .aa-stepper input { width: 38px; flex: 1 1 auto; min-width: 0; padding: 0; border: 0;
+                      background: transparent; text-align: right; font-family: var(--font-mono);
+                      font-size: 12px; color: var(--c-ink-1); box-shadow: none !important; }
+  .aa-stepper .aa-unit { flex: none; padding: 0 5px 0 2px; font-size: 10.5px; color: var(--c-ink-4); }
+
+  /* 开关 */
+  .aa-switch { display: flex; align-items: center; gap: 8px; font-size: 11.5px;
+               line-height: 1.45; color: var(--c-ink-2); cursor: pointer; user-select: none; }
+  .aa-switch input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .aa-switch i { position: relative; width: 30px; height: 18px; flex: none; border-radius: 999px;
+                 background: var(--c-line-2); transition: background .18s; }
+  .aa-switch i::after { content: ""; position: absolute; top: 2px; left: 2px; width: 14px; height: 14px;
+                        border-radius: 50%; background: var(--c-surface);
+                        box-shadow: 0 1px 2px rgba(90,70,35,.25); transition: transform .18s; }
+  .aa-switch input:checked + i { background: var(--c-accent); }
+  .aa-switch input:checked + i::after { transform: translateX(12px); }
+  .aa-switch input:focus-visible + i { box-shadow: 0 0 0 3px rgba(180,105,14,.20); }
+
+  /* 阈值滑杆 */
+  .aa-slider { display: flex; align-items: center; gap: 9px; }
+  .aa-slider input[type="range"] { flex: 1 1 auto; min-width: 0; height: 18px; accent-color: var(--c-accent);
+                                   cursor: pointer; }
+  .aa-output { display: flex; align-items: baseline; flex: none; gap: 1px;
+               color: var(--c-ink-4); font-family: var(--font-mono); font-size: 11px; }
+  .aa-output input { width: 34px; padding: 0; border: 0; background: transparent;
+                     text-align: right; font-family: var(--font-mono); font-size: 12px;
+                     color: var(--c-ink-1); box-shadow: none !important; }
+
+  /* 高级折叠 */
+  .aa-advanced { border-top: 1px solid var(--c-line); padding-top: 10px; }
+  .aa-advanced summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center;
+                         gap: 5px; padding: 3px 9px; border: 1px solid var(--c-line-2);
+                         border-radius: 999px; font-size: 10.5px; color: var(--c-ink-3); }
+  .aa-advanced summary::-webkit-details-marker { display: none; }
+  .aa-advanced summary::before { content: "›"; font-weight: 700; }
+  .aa-advanced[open] summary { color: var(--c-accent); border-color: var(--c-accent-line);
+                               background: var(--c-accent-soft); }
+  .aa-advanced[open] summary::before { transform: rotate(90deg); }
+  .aa-advanced .aa-input { margin-top: 8px; }
+
+  /* 模型选择器 */
+  #modelPicker { display: none; margin-top: 2px; border: 1px solid var(--c-line); border-radius: var(--r-md);
+                 background: var(--c-surface-2); overflow: hidden; }
+  #modelSearch { width: 100%; border: 0; border-bottom: 1px solid var(--c-line);
+                 border-radius: 0; background: transparent; padding: 7px 9px; }
+  #modelSearch:focus { box-shadow: none; }
+  #modelList { max-height: 150px; overflow-y: auto; scrollbar-width: thin;
+               scrollbar-color: var(--c-line-2) transparent; }
+  #modelList::-webkit-scrollbar { width: 6px; }
+  #modelList::-webkit-scrollbar-thumb { background: var(--c-line-2); border-radius: 3px; }
+
+  .aa-btn { display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+            border: 0; border-radius: 9px; padding: 7px 12px; font-family: var(--font-display);
+            font-size: 12px; font-weight: 700; letter-spacing: .02em; cursor: pointer;
+            white-space: nowrap;
+            transition: filter .15s, background .15s, border-color .15s; }
+  .aa-btn:hover { filter: brightness(1.03); }
+  .aa-btn:disabled { opacity: .6; cursor: default; }
+  .aa-btn.primary { background: var(--c-accent); color: var(--c-on-accent);
+                    box-shadow: 0 2px 8px rgba(180,105,14,.26); }
+  .aa-btn.danger { background: var(--c-danger-soft); color: var(--c-danger);
+                   box-shadow: inset 0 0 0 1px var(--c-danger-line); }
+  .aa-btn.ghost { background: var(--c-surface); color: var(--c-ink-2);
+                  box-shadow: inset 0 0 0 1px var(--c-line-2); }
+  .aa-btn.block { width: 100%; }
+  .aa-btn.lg { font-size: 13.5px; padding: 9px 14px; border-radius: 10px; }
+
+  /* 底部操作条 */
+  .aa-pop-foot { flex: none; display: flex; align-items: center; gap: 7px;
+                 padding: 10px 12px 11px; background: var(--c-surface);
+                 border-top: 1px solid var(--c-line); }
+  .aa-pop-foot .aa-btn.primary { flex: 1 1 auto; }
+  .aa-pop-foot .aa-btn.danger, .aa-pop-foot .aa-btn.ghost { flex: none; }
+
+  /* 首次使用引导 */
+  .aa-gate { position: fixed; inset: 0; z-index: 9999; display: none; align-items: center;
+             justify-content: center; padding: 20px; background: var(--scrim); }
+  .aa-gate-card { width: 280px; max-width: 100%; padding: 24px 20px; text-align: center;
+                  background: var(--c-surface); border: 1px solid var(--c-line-2);
+                  border-radius: var(--r-lg);
+                  box-shadow: 0 12px 32px -12px rgba(36,28,16,.45), 0 2px 6px rgba(36,28,16,.12); }
+  .aa-gate-mark { width: 48px; height: 48px; margin: 0 auto 12px; border-radius: 14px;
+                  display: block; object-fit: contain;
+                  box-shadow: 0 3px 10px rgba(180,105,14,.18); }
+  .aa-gate-title { font-family: var(--font-display); font-size: 15px; font-weight: 700;
+                   color: var(--c-ink-1); margin-bottom: 8px; }
+  .aa-gate-body { font-size: 12px; color: var(--c-ink-3); line-height: 1.7; margin-bottom: 16px; }
+  .aa-gate-body b { color: var(--c-danger); }
+  .aa-gate-count { margin-top: 10px; font-size: 12px; color: var(--c-ink-4); }
+  .aa-gate-foot { margin-top: 12px; font-size: 11px; color: var(--c-ink-4); }
+  /* 一次性使用边界确认（替代旧的 20 秒计时门禁） */
+  .aa-ack-list { margin: 8px 0 0; padding-left: 18px; font-size: 11.5px; line-height: 1.65; color: var(--c-ink-2); }
+  .aa-ack-list li { margin-bottom: 4px; }
+  .aa-ack-list b { color: var(--c-danger); }
+  .aa-ack-chk { display: flex; gap: 7px; align-items: flex-start; text-align: left; cursor: pointer;
+    font-size: 12px; color: var(--c-ink-1); padding: 9px 10px; margin-top: 4px;
+    background: var(--c-surface-2); border: 1px solid var(--c-line); border-radius: var(--r-sm); }
+  .aa-ack-chk input { margin-top: 2px; accent-color: var(--c-accent); }
+  .aa-ack-row { display: flex; gap: 7px; margin-top: 12px; }
+  .aa-ack-row .aa-btn { flex: 1; }
+  /* 答题页常驻边界行 */
+  .aa-bound { display: flex; gap: 7px; align-items: flex-start; margin-top: 10px; padding: 8px 9px;
+    background: var(--c-warn-soft); border: 1px solid var(--c-warn-line); border-radius: var(--r-sm);
+    font-size: 11.5px; color: var(--c-warn); line-height: 1.5; text-align: left; }
+  .aa-bound .b-ico { flex: none; font-weight: 700; }
+  .aa-bound b { color: var(--c-warn); }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M7.5 4.8l11 7.2-11 7.2z" fill="currentColor"/></symbol>
+    <symbol id="i-stop" viewBox="0 0 24 24"><rect x="6.5" y="6.5" width="11" height="11" rx="2" fill="currentColor"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M15 15l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
+
+<div class="body aa-popup">
+  <header class="aa-pop-head">
+    <img class="aa-mark" src="icons/icon128.png" alt="" aria-hidden="true">
+    <div class="aa-pop-title">QuizLens<span class="aa-ver" id="extVersion">v1.7.8</span></div>
+    <div class="aa-spacer"></div>
+    <a id="docLink" class="aa-link" href="docs/user-guide.html" target="_blank">使用说明</a>
+  </header>
+
+  <section class="aa-site" aria-label="当前页面状态">
+    <div class="aa-site-row">
+      <span class="aa-dot" id="siteDot"></span>
+      <span class="aa-site-host" id="siteHost">当前标签页</span>
+      <span class="aa-badge muted" id="siteState">未连接</span>
+    </div>
+    <div class="aa-site-meta">
+      <div><b id="metricTotal">—</b><span>本页题目</span></div>
+      <div><b id="metricAnswered">—</b><span>已作答</span></div>
+      <div><b id="metricMissed">—</b><span>未匹配</span></div>
+    </div>
+  </section>
+
+  <nav class="aa-tabs" role="tablist" aria-label="设置">
+    <button type="button" role="tab" data-tab="run" aria-selected="true">答题</button>
+    <button type="button" role="tab" data-tab="model" aria-selected="false">模型</button>
+    <button type="button" role="tab" data-tab="help" aria-selected="false">说明</button>
+  </nav>
+
+  <div class="aa-pop-body">
+    <section class="aa-tabpanel" data-panel="run">
+      <div class="aa-stack">
+        <!-- 常驻边界：放在首屏最上方，滚到下面等于看不见 -->
+        <div class="aa-bound" style="margin-top:0;margin-bottom:11px">
+          <span class="b-ico">!</span>
+          <span>练习 / 自测工具，<b>正式考试、监考环境请勿使用</b>。只填答案，不替你交卷。</span>
+        </div>
+        <div class="aa-field">
+          <div class="aa-label">输出模式 <span class="aa-hint">AI 回答给多少</span></div>
+          <select id="answerMode" class="aa-native" tabindex="-1" aria-hidden="true">
+            <option value="answer">只输出答案（不要解析）</option>
+            <option value="standard" selected>答案 + 解析（默认）</option>
+            <option value="full">完整功能（思考模式 + 详细解析）</option>
+          </select>
+          <div class="aa-seg" data-select="answerMode">
+            <button type="button" data-value="answer" aria-pressed="false">只答<small>最省 token</small></button>
+            <button type="button" data-value="standard" aria-pressed="true">答案+解析<small>默认</small></button>
+            <button type="button" data-value="full" aria-pressed="false">完整<small>带思考</small></button>
+          </div>
+        </div>
+
+        <div class="aa-field">
+          <div class="aa-label">答题模式 <span class="aa-hint">答案从哪来</span></div>
+          <select id="mode" class="aa-native" tabindex="-1" aria-hidden="true">
+            <option value="mixed">题库 + AI 兜底（推荐）</option>
+            <option value="bank">题库匹配（仅查题库，不调 AI）</option>
+            <option value="ai">仅 AI</option>
+          </select>
+          <div class="aa-seg" data-select="mode">
+            <button type="button" data-value="mixed" aria-pressed="true">题库+AI<small>推荐</small></button>
+            <button type="button" data-value="bank" aria-pressed="false">仅题库<small>不联网</small></button>
+            <button type="button" data-value="ai" aria-pressed="false">仅 AI<small>全靠模型</small></button>
+          </div>
+        </div>
+
+        <div class="aa-grid2">
+          <div class="aa-field">
+            <div class="aa-label">每题间隔</div>
+            <div class="aa-stepper" data-step="0.5">
+              <button type="button" data-dir="-1" aria-label="减少间隔">−</button>
+              <input id="interval" type="number" min="0" max="30" step="0.5" value="1" aria-label="每题间隔（秒）">
+              <span class="aa-unit">秒</span>
+              <button type="button" data-dir="1" aria-label="增加间隔">+</button>
+            </div>
+          </div>
+          <div class="aa-field" id="concurrencyRow">
+            <div class="aa-label">并发数</div>
+            <div class="aa-stepper" data-step="1">
+              <button type="button" data-dir="-1" aria-label="减少并发">−</button>
+              <input id="concurrency" type="number" min="1" max="5" step="1" value="3" aria-label="并发数">
+              <span class="aa-unit">路</span>
+              <button type="button" data-dir="1" aria-label="增加并发">+</button>
+            </div>
+          </div>
+        </div>
+
+        <label class="aa-switch">
+          <input id="concurrentEnabled" type="checkbox">
+          <i></i><span>AI 并发作答（关掉 = 一题一题来）</span>
+        </label>
+        <label class="aa-switch">
+          <input id="showLog" type="checkbox">
+          <i></i><span>答题时显示面板（默认关）</span>
+        </label>
+        <label class="aa-switch">
+          <input id="overwriteSelected" type="checkbox">
+          <i></i><span>覆盖已选答案（默认保留已选项）</span>
+        </label>
+
+        <div class="aa-field">
+          <div class="aa-label">模糊匹配阈值 <span class="aa-hint">题干相似度 ≥ 此值才算同一题</span></div>
+          <div class="aa-slider">
+            <input id="fuzzyThresholdRange" type="range" min="50" max="95" step="1" value="75" aria-label="模糊匹配阈值滑杆">
+            <span class="aa-output"><input id="fuzzyThreshold" type="number" min="50" max="95" step="1" value="75" aria-label="模糊匹配阈值"><span>%</span></span>
+          </div>
+          <div class="aa-note">填 <b>80</b> 或 <b>0.8</b> 都表示 80%</div>
+        </div>
+
+        <details class="aa-advanced">
+          <summary>高级 · 题库地址</summary>
+          <input id="bankBaseUrl" class="aa-input mono" placeholder="留空则用插件内置题库">
+        </details>
+
+        <div class="aa-note">只填答案，不会替你交卷；提交请你自己点。</div>
+      </div>
+    </section>
+
+    <section class="aa-tabpanel" data-panel="model" hidden>
+      <div class="aa-stack">
+        <div class="aa-field">
+          <div class="aa-label">AI Base URL <span class="aa-hint">OpenAI 兼容</span></div>
+          <input id="aiBaseUrl" class="aa-input mono" placeholder="https://api.deepseek.com">
+        </div>
+        <div class="aa-field">
+          <div class="aa-label">API Key <span class="aa-hint">仅在本地保存</span></div>
+          <input id="aiKey" class="aa-input mono" type="password" placeholder="仅在本地保存">
+        </div>
+        <div class="aa-field">
+          <div class="aa-label">模型</div>
+          <div class="aa-row">
+            <input id="aiModel" class="aa-input mono" placeholder="deepseek-chat">
+            <button id="fetchModels" class="aa-btn ghost" type="button">拉取模型</button>
+          </div>
+        </div>
+        <div id="modelPicker">
+          <input id="modelSearch" placeholder="输入字母过滤，如 d…">
+          <div id="modelList"></div>
+        </div>
+        <button id="testConn" class="aa-btn ghost block" type="button">测试连接</button>
+
+        <div class="aa-divider"></div>
+        <div class="aa-group-title">视觉模型 · 截图解题</div>
+        <div class="aa-field">
+          <div class="aa-label">视觉模型 <span class="aa-hint">需支持看图</span></div>
+          <input id="visionModel" class="aa-input mono" placeholder="glm-4v-flash（免费）">
+        </div>
+        <div class="aa-field">
+          <div class="aa-label">视觉 Base URL <span class="aa-hint">同家留空</span></div>
+          <input id="visionBaseUrl" class="aa-input mono" placeholder="不同家就填它自己的兼容端点">
+        </div>
+        <div class="aa-field">
+          <div class="aa-label">视觉 Key <span class="aa-hint">留空 = 用上面的 API Key</span></div>
+          <input id="visionKey" class="aa-input mono" type="password" placeholder="仅在本地保存">
+        </div>
+      </div>
+    </section>
+
+    <section class="aa-tabpanel" data-panel="help" hidden>
+      <div class="aa-stack">
+        <div class="aa-group">
+          <div class="aa-group-title">怎么用</div>
+          <p class="aa-note"><b>开始答题</b>：逐题作答并自动勾选，不会替你交卷。勾选「答题时显示面板」后，答题会在同一个面板里进行：上半部分是运行日志（可折叠），下面是识别到的题卡，面板里有「■ 停止答题」。</p>
+          <p class="aa-note"><b>停止</b>：弹窗里的「停止」点下去立刻生效，在飞的请求会被中断；不勾显示面板也随时能停。</p>
+          <p class="aa-note"><b>识别题目</b>：扫描当前网页题目，答案只显示在面板里，完全不碰页面。面板上的「✍ 填涂」同样受站点白名单限制。</p>
+          <p class="aa-note"><b>截图解题</b>：框选屏幕区域发给视觉模型看图答题，请先在上面的「模型」页填写视觉模型。</p>
+        </div>
+        <div class="aa-group">
+          <div class="aa-group-title">白名单</div>
+          <p class="aa-note">默认放行全部站点；想限制域名就编辑插件目录里的 whitelist.txt，一行一个域名，改完到扩展管理页「重新加载」。</p>
+        </div>
+        <div class="aa-group">
+          <div class="aa-group-title">隐私</div>
+          <p class="aa-note">AI 模式下，题干、选项、阅读材料与框选截图会发送到<b>你自己填写的 AI 服务地址</b>（截图解题走「视觉 Base URL」，留空则用文本地址；题库匹配不联网）。API Key 只保存在本机浏览器里。</p>
+          <p class="aa-note"><b>不会外发</b>：整页内容、表单里的其他字段、密码框内容。未勾选显示面板时，插件在后台静默运行。</p>
+        </div>
+        <div class="aa-group">
+          <div class="aa-group-title">交卷</div>
+          <p class="aa-note"><b>只填答案，不会替你交卷</b> —— 提交请你自己点。</p>
+        </div>
+        <div class="aa-group">
+          <div class="aa-group-title">使用边界</div>
+          <p class="aa-note">本插件是<b>练习 / 自测辅助工具</b>。请只在你有权作答的页面上使用；<b>正式考试、在线测评、监考环境请勿使用</b>。因使用本插件导致的后果由使用者自行承担。</p>
+          <p class="aa-note">完整条款见 <a href="#" id="docDisclaimer" class="aa-link">免责声明</a>（仓库 <code>DISCLAIMER.md</code>）。</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer class="aa-pop-foot">
+    <button id="start" class="aa-btn primary lg" type="button"><svg class="ico"><use href="#i-play"/></svg>开始答题</button>
+    <button id="stop" class="aa-btn danger" type="button"><svg class="ico"><use href="#i-stop"/></svg>停止</button>
+    <button id="startScan" class="aa-btn ghost" type="button"><svg class="ico"><use href="#i-search"/></svg>识别题目</button>
+  </footer>
+</div>
+
+<div id="ackGate" class="aa-gate">
+  <div class="aa-gate-card">
+    <img class="aa-gate-mark" src="icons/icon128.png" alt="" aria-hidden="true">
+    <div class="aa-gate-title">使用前请确认</div>
+    <div class="aa-gate-body" style="text-align:left">
+      本插件是<b>练习 / 自测辅助工具</b>，不是考试工具。
+      <ul class="aa-ack-list">
+        <li>只要这一份作答会<b>被打分、被记录、被当作证据</b>，或需要证明是你本人独立完成的，就不要用；</li>
+        <li><b>正式考试、在线测评、监考环境</b>请勿使用；</li>
+        <li>是否合规由你所在院校的规定与平台服务条款决定，插件无从判断；</li>
+        <li>使用产生的后果由使用者自行承担；</li>
+        <li>插件不会、也不能替你交卷。</li>
+      </ul>
+    </div>
+    <label class="aa-ack-chk">
+      <input type="checkbox" id="ackChk">
+      <span>我已阅读并理解上述使用边界与免责声明</span>
+    </label>
+    <button id="ackOpen" class="aa-link" type="button" style="display:block;margin:9px auto 0">查看完整使用说明</button>
+    <div class="aa-ack-row">
+      <button id="ackNo" class="aa-btn ghost" type="button">取消</button>
+      <button id="ackYes" class="aa-btn primary" type="button" disabled>确认并开始</button>
+    </div>
+    <div class="aa-gate-foot">仅确认一次，之后不再打扰。<a href="#" id="ackDisclaimer" class="aa-link">查看完整免责声明 ›</a></div>
+  </div>
+</div>
+
+<script src="popup.js"></script>
+</body>
+</html>

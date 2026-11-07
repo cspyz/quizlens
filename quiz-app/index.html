@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="EZYUp4agXVbCebX5IlfX7C">
+<head data-page-node-id="xSMv8zJ47yShN4Mfl7LMh2">
+<meta charset="UTF-8" data-page-node-id="oL7KAfHjhE4xEO7RwqsoOx">
+<title>综合常识练习卷</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Microsoft YaHei", sans-serif; background: #eef1f5; color: #2c3e50; }
+  .container { max-width: 860px; margin: 0 auto; padding: 24px 16px 80px; }
+  header {
+    background: #2c3e50; color: #fff; border-radius: 10px;
+    padding: 20px 24px; display: flex; justify-content: space-between; align-items: center;
+  }
+  header h1 { font-size: 20px; }
+  .timer { font-size: 22px; font-weight: bold; color: #ffd166; font-variant-numeric: tabular-nums; }
+  .progress { font-size: 13px; color: #aab7c4; margin-top: 6px; }
+  .question {
+    background: #fff; border-radius: 10px; padding: 18px 20px; margin-top: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.08);
+  }
+  .question.answered-correct { outline: 2px solid #27ae60; }
+  .question.answered-wrong   { outline: 2px solid #e74c3c; }
+  .q-tag { font-size: 12px; color: #fff; background: #3498db; border-radius: 4px; padding: 2px 8px; margin-right: 8px; }
+  .q-tag.multi { background: #8e44ad; }
+  .q-tag.judge { background: #e67e22; }
+  .q-tag.blank { background: #16a34a; }
+  .blanks { display: flex; flex-wrap: wrap; gap: 10px 18px; margin: 4px 0 8px; }
+  .blank-item { display: inline-flex; align-items: center; gap: 6px; }
+  .blank-input { padding: 8px 10px; border: 1px solid #d7dee8; border-radius: 8px;
+                 font-size: 14px; min-width: 170px; outline: none; font-family: inherit; color: #2c3e50; }
+  .blank-input:focus { border-color: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,.12); }
+  .blank-hint { font-size: 12px; color: #95a5a6; }
+  .q-num { font-size: 12px; color: #999; }
+  .q-stem { font-size: 16px; font-weight: bold; margin: 10px 0 12px; line-height: 1.6; }
+  .opt { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border: 1px solid #e3e8ee;
+         border-radius: 8px; margin-bottom: 8px; cursor: pointer; transition: background .15s; }
+  .opt:hover { background: #f5f9ff; }
+  .opt input { transform: scale(1.15); cursor: pointer; }
+  .opt-text { font-size: 15px; line-height: 1.5; }
+  .explanation { display: none; margin-top: 10px; font-size: 13px; color: #7f8c8d; }
+  .submit-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #fff;
+                box-shadow: 0 -2px 8px rgba(0,0,0,.08); padding: 14px; text-align: center; }
+  #submitBtn { background: #27ae60; color: #fff; border: 0; border-radius: 8px;
+               font-size: 16px; font-weight: bold; padding: 12px 60px; cursor: pointer; }
+  #submitBtn:hover { background: #219653; }
+  #submitBtn:disabled { background: #95a5a6; cursor: not-allowed; }
+  .result { display: none; background: #fff; border-radius: 10px; padding: 24px; margin-top: 16px; text-align: center; }
+  .result .score { font-size: 48px; font-weight: bold; color: #27ae60; }
+  .picker { background: #fff; border-radius: 10px; padding: 12px 16px; margin-top: 16px;
+            display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+            box-shadow: 0 1px 3px rgba(0,0,0,.08); font-size: 13px; }
+  .picker select { padding: 7px 9px; border: 1px solid #d7dee8; border-radius: 8px; font-size: 13px;
+                   max-width: 300px; background: #fff; }
+  .picker input { width: 70px; padding: 7px 9px; border: 1px solid #d7dee8; border-radius: 8px; font-size: 13px; }
+  .picker button { background: #2563eb; color: #fff; border: 0; border-radius: 8px;
+                   padding: 8px 18px; font-size: 13px; font-weight: 600; cursor: pointer; }
+  .picker button:hover { filter: brightness(.95); }
+  .picker button.ghost { background: #f1f5f9; color: #475569; }
+  .picker .status { color: #7f8c8d; font-size: 12px; }
+  .picker .status.err { color: #e74c3c; }
+  .filterbar { background: #fff; border-radius: 10px; padding: 10px 16px; margin-top: 12px;
+               display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+               box-shadow: 0 1px 3px rgba(0,0,0,.08); font-size: 13px; }
+  .filterbar .fb-label { color: #7f8c8d; font-size: 12px; }
+  .fbtn { border: 1px solid #d7dee8; background: #fff; color: #475569; border-radius: 999px;
+          padding: 5px 14px; font-size: 13px; cursor: pointer; font-family: inherit; }
+  .fbtn:hover { background: #f5f9ff; }
+  .fbtn.active { background: #2c3e50; border-color: #2c3e50; color: #fff; font-weight: 600; }
+  .fbtn .cnt { opacity: .7; margin-left: 4px; font-weight: 400; }
+</style>
+</head>
+<body data-page-node-id="HDcYX7O005Po1vtnEeNXQu">
+<div class="container" data-page-node-id="siuBdDWKLSBGfoBJItf1B3">
+  <header data-page-node-id="7bPOSthQZURpE4ToRvRu0H">
+    <div data-page-node-id="YnA5qgutyQ41EFIRd7T1Nx">
+      <h1 id="examTitle" data-page-node-id="TFuRmt44wizNF25sEfyEdw">综合常识练习卷</h1>
+      <div class="progress" id="progress" data-page-node-id="IVqkpULRGf7X12UDxcSAbN">共 0 题</div>
+    </div>
+    <div class="timer" id="timer" data-page-node-id="E7eOxLgjVDrd7zS3mHvwJA">--:--</div>
+  </header>
+
+  <div class="picker" data-page-node-id="aAHolZ77QFH0wRnjd0TGXr">
+    <span data-page-node-id="0YDqYUCKDgSE6i3vaE1kNK">📚 题库抽题：</span>
+    <select id="bankSel" data-page-node-id="XIZKzEb2q3rVlAKyGOPWIE">
+      <option value="" data-page-node-id="YRlXUbUUtnfJYarDFgX2cL">选择类别…</option>
+    </select>
+    <input id="bankCount" type="number" min="1" max="200" value="20" data-page-node-id="eMlHzEt7YRBhmtj2K4NXJz"> 题
+    <button id="drawBtn" data-page-node-id="RhLzFivP5HOEfzD8jonfy7">随机抽题</button>
+    <button id="resetBtn" class="ghost" data-page-node-id="Ld8efg3Af9f0gStLFrdGJz">恢复默认卷</button>
+    <span class="status" id="bankStatus" data-page-node-id="WBb4OPeMxCTChU5ULWXCXg"></span>
+  </div>
+
+  <div class="filterbar" id="filterBar"></div>
+
+  <div id="questionList" data-page-node-id="ayaMDDAtBA2weu7JctJvZq"></div>
+
+  <div class="result" id="result" data-page-node-id="XCmlYJ1zUS3LiOYvZyCX3a">
+    <div data-page-node-id="HXnoYALzUEhjqa1zCj2DOF">考试结束，得分</div>
+    <div class="score" id="score" data-page-node-id="eXPzGGEEzIiCPTE3liqFN1">0</div>
+    <div id="resultDetail" style="margin-top:8px;color:#7f8c8d" data-page-node-id="pnCGQUHLca1y079nPZO3wQ"></div>
+  </div>
+</div>
+
+<div class="submit-bar" data-page-node-id="EhlyyGtnvT7MkVzwGnwLJ1">
+  <button id="submitBtn" data-page-node-id="OASAS4bW67rVfM3A1TEGa9">提交答卷</button>
+</div>
+
+<script>
+let exam = null;          // 当前试卷 {title, durationMinutes, questions}
+let defaultExam = null;   // 默认卷（questions.json，当前 148 题）
+let remaining = 0;
+let timerId = null;
+
+const TYPE_NAME = { single: "单选", multi: "多选", judge: "判断", blank: "填空" };
+
+// 题库来自外部整合包，题干/选项里可能带 < > & 这类字符（实测有 1900+ 题含 "<"），
+// 直接拼进 innerHTML 会被当标签解析、显示错乱，一律转义
+function escapeHtml(s) {
+  return String(s == null ? "" : s).replace(/[&<>"']/g, c =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+// 大题库类别不再在这里硬编码——从 bank/index.json 读，唯一清单来源。
+// 以前这份列表和 tools/build_bank.py 各写一份，新增题库后插件能答、这里却抽不出来。
+async function loadBankList() {
+  const sel = document.getElementById("bankSel");
+  try {
+    const idx = await (await fetch("./bank/index.json")).json();
+    idx.forEach(item => {
+      const file = typeof item === "string" ? item : item.file;
+      if (!file) return;
+      const label = (typeof item === "object" && item.label) || file;
+      const count = (typeof item === "object" && item.count) ? ` · ${item.count} 题` : "";
+      const opt = document.createElement("option");
+      opt.value = file;
+      opt.textContent = label + count;
+      sel.appendChild(opt);
+    });
+    if (!sel.options.length) setStatus("题库清单为空", true);
+  } catch (e) {
+    // 题库下拉拉不到不影响做题（默认卷已经渲染出来了），所以只提示、不打断。
+    // 但提示要写清楚"这只影响抽题，不影响当前这份卷子"，否则用户会以为页面坏了。
+    setStatus("题库清单读取失败：" + e.message + "（只影响「随机抽题」，不影响当前这份卷子）", true);
+  }
+}
+
+// 填空题的输入框：class 必须是 blank-input（插件靠它认题），
+// 且不能带 name/id/placeholder 让人以为是网站表单——插件会排除"用户名/密码/搜索"这类字段。
+function renderBlankInputs(n) {
+  return `<div class="blanks">` + Array.from({ length: n }, (_, i) =>
+    `<span class="blank-item">` +
+      `<input class="blank-input" type="text" autocomplete="off"` +
+      ` placeholder="${n > 1 ? "第 " + (i + 1) + " 空" : "请填写答案"}">` +
+      (n > 1 ? `<span class="blank-hint">第 ${i + 1} 空</span>` : "") +
+    `</span>`).join("") + `</div>`;
+}
+
+// 填空答案比对：去空白、去标点、全角转半角、英文不分大小写；纯数字按数值比
+function normBlank(s) {
+  return String(s == null ? "" : s)
+    .replace(/[Ａ-Ｚａ-ｚ０-９]/g, ch => String.fromCharCode(ch.charCodeAt(0) - 0xFEE0))
+    .toLowerCase()
+    .replace(/[\s\p{P}\p{S}_]+/gu, "");
+}
+function blankEqual(user, right) {
+  const a = normBlank(user), b = normBlank(right);
+  if (!a || !b) return false;
+  if (a === b) return true;
+  const na = Number(user), nb = Number(right);
+  if (!isNaN(na) && !isNaN(nb)) return Math.abs(na - nb) < 1e-9;
+  return false;
+}
+
+function renderExam(questions, title, durationMinutes) {
+  exam = { title, durationMinutes, questions };
+  document.getElementById("examTitle").textContent = title;
+  document.getElementById("result").style.display = "none";
+  document.getElementById("submitBtn").disabled = false;
+  const list = document.getElementById("questionList");
+  list.innerHTML = "";
+
+  questions.forEach((q, idx) => {
+    const div = document.createElement("div");
+    div.className = "question";
+    div.dataset.qid = q.id;
+    const opts = Array.isArray(q.options) ? q.options : [];
+    const ans = Array.isArray(q.answer) ? q.answer : [];
+    const blanks = Array.isArray(q.answers) ? q.answers : [];
+    const isBlank = q.type === "blank";
+
+    const bodyHtml = isBlank
+      ? renderBlankInputs(blanks.length || 1)
+      : opts.map((opt, i) => `
+        <label class="opt">
+          <input type="${q.type === "multi" ? "checkbox" : "radio"}"
+                 name="q${q.id}" value="${i}">
+          <span class="opt-text">${String.fromCharCode(65 + i)}. ${escapeHtml(opt)}</span>
+        </label>`).join("");
+
+    const rightText = isBlank
+      ? blanks.map(escapeHtml).join(" ／ ")
+      : ans.map(i => String.fromCharCode(65 + i)).join("、");
+
+    div.innerHTML = `
+      <span class="q-tag ${q.type}">${TYPE_NAME[q.type] || "单选"}</span>
+      <span class="q-num">第 ${idx + 1} / ${questions.length} 题</span>
+      <div class="q-stem">${escapeHtml(q.question)}</div>
+      ${bodyHtml}
+      <div class="explanation">正确答案：${rightText}</div>
+    `;
+    list.appendChild(div);
+  });
+
+  document.getElementById("progress").textContent = `共 ${questions.length} 题，已答 0 题`;
+  remaining = exam.durationMinutes * 60;
+  renderTimer();
+  if (timerId) clearInterval(timerId);
+  timerId = setInterval(tick, 1000);
+  currentFilter = "all";
+  buildFilterBar();
+  updateProgress();
+}
+
+// ---------- 题型筛选（填空题散在卷面各处，没有这个很容易以为"没有填空题"）----------
+let currentFilter = "all";
+
+// 当前"显示中"的题。判分与进度都只看这些 —— 筛到填空后交卷，就只判填空那部分。
+function visibleQuestions() {
+  return [...document.querySelectorAll(".question")].filter(d => d.style.display !== "none");
+}
+
+function buildFilterBar() {
+  const bar = document.getElementById("filterBar");
+  const items = [["all", "全部"], ["single", "单选"], ["multi", "多选"], ["judge", "判断"], ["blank", "填空"]];
+  bar.innerHTML = "";
+  const lab = document.createElement("span");
+  lab.className = "fb-label";
+  lab.textContent = "题型筛选：";
+  bar.appendChild(lab);
+  const all = exam.questions;
+  items.forEach(([type, name]) => {
+    const n = type === "all" ? all.length : all.filter(q => q.type === type).length;
+    if (!n) return;                                   // 这份卷子里没有这种题就不显示按钮
+    const b = document.createElement("button");
+    b.className = "fbtn" + (currentFilter === type ? " active" : "");
+    b.dataset.type = type;
+    b.innerHTML = `${name}<span class="cnt">${n}</span>`;
+    b.addEventListener("click", () => applyFilter(type));
+    bar.appendChild(b);
+  });
+}
+
+function applyFilter(type) {
+  currentFilter = type;
+  document.querySelectorAll(".question").forEach(d => {
+    const q = exam.questions.find(x => x.id === Number(d.dataset.qid));
+    d.style.display = (type === "all" || (q && q.type === type)) ? "" : "none";
+  });
+  document.querySelectorAll("#filterBar .fbtn").forEach(b =>
+    b.classList.toggle("active", b.dataset.type === type));
+  updateProgress();
+}
+
+// 出错时在页面上说明白"为什么没题、怎么修"。
+// 以前 init() 没有任何错误处理，一旦 fetch 失败（最常见：没起本地服务、
+// 或直接双击 index.html 用 file:// 打开）页面就停在初始状态——
+// 头部写着"共 0 题"、计时器"--:--"、题库下拉只有"选择类别…"，
+// 用户完全不知道发生了什么，只会以为"练习页坏了/题没了"。
+function showFatal(title, detail, tips) {
+  const box = document.getElementById("questionList");
+  if (!box) return;
+  box.innerHTML =
+    '<div style="background:#fff;border-radius:10px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,.08)">' +
+      '<div style="font-size:18px;font-weight:bold;color:#e74c3c;margin-bottom:10px">' + title + '</div>' +
+      '<div style="color:#7f8c8d;font-size:13px;line-height:1.9;margin-bottom:14px">' + detail + '</div>' +
+      '<div style="background:#f8fafc;border-radius:8px;padding:14px 16px;font-size:13px;line-height:2">' +
+        '<b>怎么修：</b><br>' + tips +
+      '</div>' +
+    '</div>';
+}
+
+async function init() {
+  let examData;
+  try {
+    const res = await fetch("./questions.json");
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    examData = await res.json();
+  } catch (e) {
+    // file:// 打开时 fetch 一定失败，单独给出最直接的解法
+    const isFile = location.protocol === "file:";
+    showFatal(
+      "题目没能加载出来（" + e.message + "）",
+      isFile
+        ? "当前是用 <code>file://</code> 直接打开的这个文件。浏览器出于安全限制，" +
+          "<b>禁止 file:// 页面用 fetch 读取本地文件</b>，所以 questions.json 取不到。"
+        : "取 <code>./questions.json</code> 失败。请确认页面地址正确、" +
+          "或改用练习页的正式地址（见 README 的「一、练习页面」）。",
+      isFile
+        ? "请通过 <b>http(s)://</b> 地址访问本页面，不要直接双击 html 文件。"
+        : "请刷新重试；仍失败则改用练习页的正式地址（见 README 的「一、练习页面」）。"
+    );
+    return;
+  }
+
+  exam = examData;
+  defaultExam = exam;
+  renderExam(exam.questions, exam.title, exam.durationMinutes);
+  const list = document.getElementById("questionList");
+  list.addEventListener("change", updateProgress);
+  list.addEventListener("input", updateProgress);   // 填空是打字，change 只在失焦时触发，要补 input
+  document.getElementById("submitBtn").addEventListener("click", submit);
+
+  // 填充题库类别下拉（从 bank/index.json 动态读）
+  await loadBankList();
+  document.getElementById("drawBtn").addEventListener("click", drawFromBank);
+  document.getElementById("resetBtn").addEventListener("click", () => {
+    renderExam(defaultExam.questions, defaultExam.title, defaultExam.durationMinutes);
+    setStatus("");
+  });
+}
+
+function setStatus(text, isErr) {
+  const el = document.getElementById("bankStatus");
+  el.textContent = text;
+  el.className = "status" + (isErr ? " err" : "");
+}
+
+// 从大题库随机抽题出新卷
+async function drawFromBank() {
+  const file = document.getElementById("bankSel").value;
+  if (!file) { setStatus("请先选择题库类别", true); return; }
+  const n = Math.max(1, Math.min(200, Number(document.getElementById("bankCount").value) || 20));
+  setStatus("加载题库中…");
+  try {
+    const t0 = performance.now();
+    const bank = (await (await fetch("./bank/" + file)).json());
+    const pool = bank.questions;
+    if (!pool || !pool.length) { setStatus("该题库为空", true); return; }
+    // 洗牌抽 N 题
+    const idx = [...pool.keys()];
+    for (let i = idx.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [idx[i], idx[j]] = [idx[j], idx[i]];
+    }
+    const picked = idx.slice(0, n).map((pi, i) => ({
+      ...pool[pi],
+      id: i + 1   // 重新编号，避免 input name 冲突
+    }));
+    // 限时按题量给：每题 45 秒，最少 5 分钟（之前固定 25 分钟，抽 200 题也是 25 分钟）
+    const minutes = Math.max(5, Math.round(picked.length * 0.75));
+    renderExam(picked, `${bank.category || file} · 随机 ${picked.length} 题`, minutes);
+    setStatus(`已从 ${bank.count} 题中抽出 ${picked.length} 题（${Math.round(performance.now() - t0)}ms，限时 ${minutes} 分钟）`);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } catch (e) {
+    setStatus("抽题失败：" + e.message, true);
+  }
+}
+
+function renderTimer() {
+  const m = String(Math.floor(remaining / 60)).padStart(2, "0");
+  const s = String(remaining % 60).padStart(2, "0");
+  const el = document.getElementById("timer");
+  el.textContent = `${m}:${s}`;
+  el.style.color = remaining <= 60 ? "#e74c3c" : "#ffd166";
+}
+
+function tick() {
+  remaining--;
+  renderTimer();
+  if (remaining <= 0) { clearInterval(timerId); submit(); }
+}
+
+function updateProgress() {
+  const shown = visibleQuestions();
+  const answered = shown.filter(d => {
+    const blanks = [...d.querySelectorAll(".blank-input")];
+    if (blanks.length) return blanks.every(i => i.value.trim() !== "");   // 填空：每个空都填了才算答
+    return !!d.querySelector("input:checked");
+  }).length;
+  const scope = currentFilter === "all" ? "" : `（当前显示 ${shown.length} 题）`;
+  document.getElementById("progress").textContent =
+    `共 ${exam.questions.length} 题${scope}，已答 ${answered} 题`;
+}
+
+function submit() {
+  if (document.getElementById("submitBtn").disabled) return;
+  clearInterval(timerId);
+  document.getElementById("submitBtn").disabled = true;
+
+  const scope = visibleQuestions();     // 只看当前显示的题（筛了题型就只判这一类）
+  let correct = 0;
+  scope.forEach(div => {
+    const q = exam.questions.find(x => x.id === Number(div.dataset.qid));
+    // 题库里个别脏数据不能让整个判分中断
+    if (!q) return;
+
+    let right;
+    if (q.type === "blank") {
+      const inputs = [...div.querySelectorAll(".blank-input")];
+      const rightAns = Array.isArray(q.answers) ? q.answers : [];
+      if (!inputs.length || !rightAns.length) return;
+      // 多空题：每个空都要对（缺一个就算错）
+      right = rightAns.every((ans, i) => blankEqual(inputs[i] && inputs[i].value, ans));
+    } else {
+      if (!Array.isArray(q.answer)) return;
+      const picked = [...div.querySelectorAll("input:checked")].map(i => Number(i.value)).sort();
+      right = [...q.answer].sort().toString() === picked.toString();
+    }
+    div.classList.add(right ? "answered-correct" : "answered-wrong");
+    div.querySelector(".explanation").style.display = "block";
+    if (right) correct++;
+  });
+
+  const total = scope.length;
+  document.getElementById("score").textContent = correct;
+  document.getElementById("resultDetail").textContent = total
+    ? `共 ${total} 题，答对 ${correct} 题，正确率 ${Math.round(correct / total * 100)}%`
+      + (currentFilter === "all" ? "" : `（只判了「${TYPE_NAME[currentFilter]}」）`)
+    : "本次试卷没有题目";
+  document.getElementById("result").style.display = "block";
+  document.getElementById("result").scrollIntoView({ behavior: "smooth" });
+}
+
+init();
+</script>
+</body>
+</html>

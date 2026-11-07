@@ -1,0 +1,22 @@
+# 统一行尾，避免 Windows 贡献者与 Linux/macOS 贡献者互相看到"整文件改动"
+#
+# 默认一律 LF：插件源码、脚本、文档都以 LF 存储。
+# 例外：.bat 必须是 CRLF，Windows 的批处理解析器对 LF 行尾敏感
+# （尤其 goto / label / 多行 if 块），用 LF 会出现难以定位的跳转失败。
+
+* text=auto eol=lf
+
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# 二进制资源：不要做任何行尾或文本转换
+*.png binary
+*.webp binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.zip binary
+*.parquet binary
+*.woff binary
+*.woff2 binary

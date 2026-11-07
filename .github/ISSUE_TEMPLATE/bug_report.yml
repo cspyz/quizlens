@@ -1,0 +1,76 @@
+name: Bug 报告
+description: 识别不到题目、填涂失败、面板异常、AI 请求报错等
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        提交前请先确认这不是 README「已知问题」一节里已列出的 7 条之一。
+        截图与日志中的 API Key、账号信息、真实试卷内容请先打码或删除。
+  - type: input
+    id: version
+    attributes:
+      label: 插件版本
+      description: 见 extension/manifest.json 的 version 字段，或扩展管理页卡片上的版本号
+      placeholder: "1.7.8"
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: 浏览器与版本
+      placeholder: "Chrome 131.0.6778.86 / Edge 131.0.2903.70"
+    validations:
+      required: true
+  - type: dropdown
+    id: mode
+    attributes:
+      label: 出问题时用的是哪个功能
+      options:
+        - 题库 + AI 兜底
+        - 题库匹配（不联网）
+        - 仅 AI
+        - 识别页面题目（不自动填涂）
+        - 截图解题
+        - 面板填涂
+    validations:
+      required: true
+  - type: input
+    id: site
+    attributes:
+      label: 出问题的页面
+      description: 站点名，或同类的公开页面地址。不要贴需要登录的真实试卷。
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      placeholder: |
+        1. 打开 …
+        2. 弹窗选 … 模式，点「开始答题」
+        3. 第 N 题 …
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望结果 vs 实际结果
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: 日志
+      description: 弹窗日志 + 答题面板日志。文本优先（面板日志可复制），截图也可以。**API Key 必须打码。**
+      render: text
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: 确认
+      options:
+        - label: 我已阅读 README 的「已知问题」，本次不是已列出的 7 条之一
+          required: true
+        - label: 内容中不含我的 API Key、账号信息或真实试卷
+          required: true

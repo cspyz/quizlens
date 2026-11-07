@@ -1,0 +1,4 @@
+# C-Eval 原始 parquet 缓存（约 2.5MB，可由 import_ceval.py 重新下载）
+raw/
+_subjects.json
+_counts.json

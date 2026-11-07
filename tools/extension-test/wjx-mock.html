@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>问卷星考试模拟页（真实 DOM 结构）</title>
+<style>
+  body { font-family: "Microsoft YaHei", sans-serif; max-width: 720px; margin: 30px auto; }
+  .field { border: 1px solid #eee; padding: 14px; margin: 16px 0; border-radius: 6px; }
+  .div_title_question { font-weight: bold; margin-bottom: 10px; }
+  /* 真实问卷星：input 隐藏、选中态用 class 自绘 */
+  .jqradiowrapper input { display: none; }
+  .ui-radio { border: 1px solid #ddd; border-radius: 4px; padding: 8px 12px; margin: 6px 0; cursor: pointer; }
+  .ui-radio.checked { border-color: #3cb371; background: #e8f7ef; }
+  .jqradio { display: inline-block; width: 12px; height: 12px; border: 1px solid #999; border-radius: 50%; }
+  .jqradio.jqchecked { background: #3cb371; }
+  .label { display: inline-block; margin-left: 6px; }
+  #ctlNext, #ctlSubmit { display: inline-block; padding: 8px 28px; background: #3cb371;
+    color: #fff; border-radius: 4px; cursor: pointer; margin-right: 10px; user-select: none; }
+</style>
+</head>
+<body>
+<h3>问卷星模拟（ks.wjx.top 真实 DOM：jqradiowrapper + div.label[for]）</h3>
+<div id="wrapper"></div>
+<div id="ctlNext">下一题</div>
+<div id="ctlSubmit">提交答卷</div>
+
+<script>
+  // ============ chrome API stub（模拟扩展环境） ============
+  window.__aiQueue = [];
+  window.__state = { checked: {}, uiSel: {}, jqCalls: [], submitClicked: 0 };
+  window.chrome = {
+    runtime: {
+      onMessage: { addListener: fn => { window.__aaListener = fn; } },
+      sendMessage: async msg => {
+        if (msg.type === "AI_CHAT") {
+          const reply = window.__aiQueue.length ? window.__aiQueue.shift() : "A";
+          return { ok: true, text: reply };
+        }
+        if (msg.type === "GET_WHITELIST") {
+          return { ok: true, hosts: ["localhost", "127.0.0.1"] };  // 模拟 background 读 whitelist.txt
+        }
+        return { ok: false, error: "stub" };
+      }
+    },
+    // showLog: true —— 与 harness.newPage 的默认值保持一致。
+    // 产品的运行日志面板默认是**关**的（不创建面板 DOM、日志只进控制台），
+    // 而本测试要读日志、要断言"面板存在"，所以必须显式打开。
+    storage: { local: { get: async () => ({ showLog: true }), set: async () => {} } }
+  };
+</script>
+<script src="content.js"></script>
+<script>
+  // ============ 模拟问卷星引擎（复刻 jqradiowrapper 真实行为） ============
+  const PAGES = [
+    [
+      { type: "radio",    name: "q1", stem: '1. 您的学历是？<span class="req">*</span>', opts: ["高中及以下", "大专", "本科", "硕士及以上"] },
+      { type: "checkbox", name: "q2", stem: "2. 您的兴趣爱好？（多选）", opts: ["阅读", "运动", "旅游", "游戏"] },
+      { type: "radio",    name: "q3", stem: "3. 您是否满意本次服务？", opts: ["满意", "不满意"] }
+    ],
+    [
+      { type: "radio", name: "q4", stem: "4. 第二页问题甲：您所在的城市规模？", opts: ["一线", "二线", "三四线"] },
+      { type: "radio", name: "q5", stem: "5. 第二页问题乙：是否愿意再次购买？", opts: ["愿意", "不愿意"] }
+    ]
+  ];
+  let curPage = 0;
+
+  function recordState(field, q) {
+    window.__state.checked[q.name] = [...field.querySelectorAll("input")].map(x => x.checked);
+    window.__state.uiSel[q.name] = [...field.querySelectorAll(".ui-radio")].map(r => r.classList.contains("checked"));
+  }
+
+  function render() {
+    const w = document.getElementById("wrapper");
+    w.innerHTML = "";
+    const pg = document.createElement("div");
+    pg.id = "pageNo";
+    pg.textContent = "第 " + (curPage + 1) + " 页";
+    w.appendChild(pg);
+
+    PAGES[curPage].forEach(q => {
+      const field = document.createElement("div");
+      field.className = "field";
+      field.id = "div" + q.name;
+      const title = document.createElement("div");
+      title.className = "div_title_question";
+      title.innerHTML = q.stem;
+      field.appendChild(title);
+
+      q.opts.forEach((opt, oi) => {
+        const row = document.createElement("div");
+        row.className = "ui-radio";
+        // 真实结构：input 裹在空 span 里 + 空 a + 文本在兄弟 div.label[for]
+        const wrap = document.createElement("span");
+        wrap.className = "jqradiowrapper";
+        const inp = document.createElement("input");
+        inp.type = q.type;
+        inp.name = q.name;
+        inp.id = q.name + "_" + (oi + 1);
+        inp.value = String(oi + 1);
+        inp.style.display = "none";
+        const a = document.createElement("a");
+        a.className = "jqradio";
+        wrap.appendChild(inp);
+        wrap.appendChild(a);
+        const lab = document.createElement("div");
+        lab.className = "label";
+        lab.setAttribute("for", inp.id);
+        lab.textContent = String.fromCharCode(65 + oi) + ". " + opt;
+        row.appendChild(wrap);
+        row.appendChild(lab);
+
+        // 模拟问卷星 jqradio：绑定在 .ui-radio 上。
+        // 关键复刻：点 input 本身只更新样式、不同步 checked；点容器/a/label 才完整选中
+        row.addEventListener("click", e => {
+          window.__state.jqCalls.push(q.name + ":" + oi);
+          const full = e.target !== inp;
+          if (q.type === "radio") {
+            if (full) {
+              field.querySelectorAll(".ui-radio").forEach(r => {
+                r.classList.remove("checked");
+                r.querySelector("a").classList.remove("jqchecked");
+                r.querySelector("input").checked = false;
+              });
+              inp.checked = true;
+            }
+            row.classList.add("checked");
+            a.classList.add("jqchecked");
+          } else {
+            if (full) inp.checked = !inp.checked;
+            row.classList.toggle("checked", inp.checked);
+            a.classList.toggle("jqchecked", inp.checked);
+          }
+          recordState(field, q);
+        });
+        field.appendChild(row);
+      });
+      w.appendChild(field);
+    });
+
+    document.getElementById("ctlNext").style.display =
+      curPage < PAGES.length - 1 ? "inline-block" : "none";
+  }
+
+  document.getElementById("ctlNext").addEventListener("click", () => {
+    if (curPage < PAGES.length - 1) { curPage++; render(); }
+  });
+  document.getElementById("ctlSubmit").addEventListener("click", () => {
+    window.__state.submitClicked++;
+  });
+  render();
+
+  // ============ 测试驱动：启动插件自动答题 ============
+  window.__start = () => {
+    window.__aiQueue = ["C", "A、C", "A", "B", "A"];
+    window.__aaListener({
+      type: "START",
+      settings: {
+        mode: "ai", intervalMs: 300, fuzzyThreshold: 75,
+        aiBaseUrl: "http://stub", aiKey: "test", aiModel: "stub",
+        // showLog: true —— run() 是按**这条消息里的 settings** 决定要不要建面板的
+        // （不是按 storage），而本测试要读日志、要断言面板存在，所以必须显式打开。
+        showLog: true
+      }
+    });
+  };
+</script>
+</body>
+</html>

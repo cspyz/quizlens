@@ -1,0 +1,46 @@
+name: 功能请求
+description: 适配新站点、支持新题型、改进交互
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        本项目有明确的边界：**不会**加入自动交卷、绕过验证码、隐藏作答痕迹、上报数据的能力。
+        这类请求会被直接关闭，见 CONTRIBUTING.md 第五节「不接受哪些 PR」。
+  - type: dropdown
+    id: kind
+    attributes:
+      label: 请求类型
+      options:
+        - 适配新的答题站点
+        - 支持新的题型（当前只支持单选/多选/判断/填空）
+        - 识别与匹配的准确率
+        - 界面与交互
+        - 文档与工具链
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: 你遇到的问题
+      description: 描述现象，而不是直接给方案。"我希望能导出"这种不是问题描述。
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 你希望的解决方式
+  - type: textarea
+    id: dom
+    attributes:
+      label: 如果涉及页面适配，请提供 DOM 结构
+      description: 题干、选项容器、选中态的 class 或标签名即可，不需要贴题目内容。
+      render: html
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: 确认
+      options:
+        - label: 这个请求不涉及自动交卷、绕过验证码、隐藏痕迹或数据上报
+          required: true

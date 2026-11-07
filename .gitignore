@@ -1,0 +1,71 @@
+# ============================================================
+# 注意：gitignore 不支持行尾注释。
+# 模式后面写 "  # 说明" 会被当成模式的一部分，规则静默失效。
+# 所有注释必须单独成行。
+#
+# 本文件必须在第一次 `git add` 之前就位。
+# 大文件一旦被提交，`git rm` 只是移出工作区，对象仍留在历史里，
+# 之后只能 git filter-repo 重写历史。
+#
+# 已清理：2026-11-06 把过程产物与大体积数据移出仓库，规则同步收紧。
+# 注意：测试夹具（tools/extension-test/*.html）和 shim 单测**仍在仓库内**——
+# 它们体积小，且是复现问题的必要条件。这里排除的只是运行产物：截图、日志、浏览器 profile。
+# ============================================================
+
+# ---------- 题库数据（不入库，走 Releases）----------
+extension/bank/
+quiz-app/bank/
+# 作者本地维护的补充题库源：上游来源尚未记录，不能随代码仓库分发
+tools/bank-src/
+
+# ---------- 测试与浏览器产物 ----------
+# playwright 与浏览器，测试环境，可重装（已移出仓库）
+.pw-deps/
+# Chromium 持久化 profile，含 Cookies 数据库（可复用的登录凭据）—— 绝不能入库
+.ext-test-profiles/
+.tmp-cdp-profile*/
+.tmp-chrome-*
+debug.log
+pw-final.log
+# order-test.js 每次运行都会重写这张截图，不入库
+tools/extension-test/mixed-order.png
+
+# ---------- 数据、备份与生成物 ----------
+*.db
+*.sqlite
+*.sqlite3
+_backup-*
+*.bak
+
+# ---------- 外部抓取缓存与生成报告 ----------
+tools/ceval-import/raw/
+tools/ceval-import/_subjects.json
+tools/ceval-import/_counts.json
+tools/ceval-import/_levels.txt
+# 注意：实际文件名是 _import_report.md，不是 _report.md
+# （旧规则写成 _report.md 导致该文件混进了索引，已修正）
+tools/ceval-import/_import_report.md
+
+# ---------- 依赖 ----------
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+
+# ---------- 本地协作与内部记录 ----------
+# WorkBuddy 的项目记忆与工作日志，属于本地协作产物，不随仓库分发
+.workbuddy/
+
+# ---------- 系统与编辑器 ----------
+Thumbs.db
+desktop.ini
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# ---------- 本地配置与机密 ----------
+.env
+.env.*
+*.pem
+*.key

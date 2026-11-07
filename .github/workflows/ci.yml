@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: 语法检查与 shim 单测
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: JS 语法检查
+        shell: bash
+        run: |
+          fail=0
+          while IFS= read -r f; do
+            if ! node --check "$f"; then
+              echo "::error file=$f::语法错误"
+              fail=1
+            fi
+          done < <(git ls-files '*.js')
+          exit $fail
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Python 语法检查
+        run: python -m compileall -q tools
+
+      - name: shim 单测（零依赖，不需要 playwright）
+        run: node tools/shim/run-all.js
+
+      - name: 检查 manifest 与 package.json 版本一致
+        shell: bash
+        run: |
+          m=$(node -p "require('./extension/manifest.json').version")
+          p=$(node -p "require('./package.json').version")
+          echo "manifest=$m package=$p"
+          if [ "$m" != "$p" ]; then
+            echo "::error::extension/manifest.json ($m) 与 package.json ($p) 版本不一致"
+            exit 1
+          fi
+
+  # 浏览器 e2e 不进 CI：它需要 playwright + Chromium，且要加载真实扩展 service worker，
+  # 在无图形界面的容器里容易因 spawn EPERM 失败（作者本机即如此）。
+  # 需要时手动跑：npm i -D playwright && npx playwright install chromium && npm run test:e2e

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>混合结构乱序测试页</title>
+<style>
+  body { font-family: "Microsoft YaHei", sans-serif; max-width: 700px; margin: 30px auto; }
+  .ui-radio input { display: none; }
+  .ui-radio { padding: 6px 10px; margin: 4px 0; cursor: pointer; border: 1px solid #ddd; border-radius: 4px; }
+  .ui-radio.checked { background: #e8f7ef; border-color: #3cb371; }
+  .blank { display: inline-block; min-width: 48px; border-bottom: 1px solid #333; text-align: center; color: #2563eb; }
+</style>
+</head>
+<body>
+<h2>混合结构页面：radio 题 / 纯文本题 / 空格题交错</h2>
+<div id="content">
+  <!-- 1. radio 题 -->
+  <div class="field">
+    <div class="div_title_question">1. 世界上面积最大的海洋是哪一个？</div>
+    <div class="ui-radio"><span><input type="radio" name="qa" id="qa1" value="1"></span><label>太平洋</label></div>
+    <div class="ui-radio"><span><input type="radio" name="qa" id="qa2" value="2"></span><label>大西洋</label></div>
+    <div class="ui-radio"><span><input type="radio" name="qa" id="qa3" value="3"></span><label>印度洋</label></div>
+    <div class="ui-radio"><span><input type="radio" name="qa" id="qa4" value="4"></span><label>北冰洋</label></div>
+  </div>
+  <!-- 2. 纯文本题（无 input，题干+内联选项） -->
+  <div class="textq">2. 光合作用主要吸收什么颜色的可见光波段？ A. 绿光 B. 红光和蓝紫光 C. 黄光 D. 紫外光</div>
+  <!-- 3. 空格题 -->
+  <div class="blankq">3. 《静夜思》的作者是（<span class="blank">__3__</span>）。</div>
+  <p>李白是唐代诗人。</p>
+  <!-- 4. radio 题 -->
+  <div class="field">
+    <div class="div_title_question">4. 计算机中 1 个字节等于多少个二进制位？</div>
+    <div class="ui-radio"><span><input type="radio" name="qb" id="qb1" value="1"></span><label>4</label></div>
+    <div class="ui-radio"><span><input type="radio" name="qb" id="qb2" value="2"></span><label>8</label></div>
+    <div class="ui-radio"><span><input type="radio" name="qb" id="qb3" value="3"></span><label>16</label></div>
+  </div>
+  <!-- 5. 纯文本题 -->
+  <div class="textq">5. 地球公转一周的时间大约是多少？ A. 一天 B. 一个月 C. 一年 D. 十年</div>
+  <!-- 6. 空格题 -->
+  <div class="blankq">6. 水的化学式是（<span class="blank">__6__</span>）。</div>
+</div>
+
+<script>
+  window.__state = { submitClicked: 0 };
+  window.chrome = {
+    runtime: {
+      onMessage: { addListener: fn => { window.__aaListener = fn; } },
+      sendMessage: async msg =>
+        msg.type === "GET_WHITELIST"
+          ? { ok: true, hosts: ["scan.example.com"] }
+          : msg.type === "AI_CHAT"
+            ? { ok: true, text: "A" }
+            : { ok: false, error: "stub" }
+    },
+    storage: { local: { get: async () => ({}), set: async () => {} } }
+  };
+</script>
+<script src="content.js"></script>
+<script>
+  document.querySelectorAll(".ui-radio").forEach(row => {
+    row.addEventListener("click", () => {
+      const inp = row.querySelector("input");
+      const field = row.closest(".field");
+      if (inp.type === "radio") {
+        field.querySelectorAll("input").forEach(x => { x.checked = false; x.closest(".ui-radio").classList.remove("checked"); });
+      }
+      inp.checked = !inp.checked;
+      row.classList.toggle("checked", inp.checked);
+    });
+  });
+  window.__start = () => {
+    window.__aaListener({
+      type: "START",
+      settings: { mode: "ai", intervalMs: 300, aiKey: "t" }
+    });
+  };
+</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "quizlens",
+  "version": "1.7.8",
+  "private": true,
+  "description": "QuizLens 练习助手 —— 浏览器扩展源码与工具链。插件本体零依赖，本文件只服务于测试，安装插件时不需要 npm install",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node tools/shim/run-all.js",
+    "test:shim": "node tools/shim/run-all.js",
+    "test:e2e": "node tools/extension-test/run-all.js",
+    "icons": "python tools/make_icons.py"
+  },
+  "devDependencies": {
+    "playwright": "^1.40.0"
+  }
+}

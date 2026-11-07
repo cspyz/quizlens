@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>English Reading Practice — Set 2</title>
+<style>
+  :root { --ink:#1f2937; --muted:#6b7280; --line:#e5e7eb; --accent:#2563eb; --paper:#fffdf8; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #eef2f7; color: var(--ink);
+    font: 16px/1.7 "Georgia", "Times New Roman", "Songti SC", serif;
+  }
+  a { color: var(--accent); }
+  .topbar {
+    background: #0f172a; color: #e2e8f0; padding: 14px 24px;
+    font: 600 14px/1.4 -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif;
+    letter-spacing: .02em;
+  }
+  .topbar span { color: #93c5fd; }
+  .wrap { max-width: 1020px; margin: 28px auto 60px; padding: 0 18px; }
+
+  .page-head { padding: 4px 4px 24px; }
+  .page-kicker {
+    font: 700 11px/1.4 -apple-system, "Segoe UI", sans-serif; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 8px;
+  }
+  .page-head h1 { font-size: 32px; line-height: 1.2; margin: 0 0 8px; }
+  .page-sub {
+    margin: 0; max-width: 62ch;
+    font: 14px/1.65 -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif; color: var(--muted);
+  }
+  .page-sub b { color: #b45309; font-weight: 600; }
+
+  .part { margin-bottom: 34px; }
+  .part-head { display: flex; align-items: center; gap: 10px; margin: 0 2px 12px; }
+  .part-no {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; border-radius: 6px; background: #0f172a; color: #e2e8f0;
+    font: 700 12px/1 -apple-system, "Segoe UI", sans-serif;
+  }
+  .part-head h2 {
+    font: 700 14px/1.4 -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif;
+    letter-spacing: .02em; margin: 0;
+  }
+  .part-note {
+    font: 12px/1.4 -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif; color: #94a3b8;
+  }
+
+  .reading-set {
+    display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 22px;
+    align-items: start;
+  }
+  .passage, .questions, .drill {
+    background: var(--paper); border: 1px solid var(--line); border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(15, 23, 42, .06);
+  }
+  .passage { padding: 28px 30px; }
+  .passage-kicker {
+    font: 700 11px/1.4 -apple-system, "Segoe UI", sans-serif; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
+  }
+  .passage h1 { font-size: 28px; line-height: 1.25; margin: 0 0 6px; }
+  .byline { font: italic 13px/1.5 -apple-system, "Segoe UI", sans-serif; color: var(--muted); margin-bottom: 20px; }
+  .passage p { margin: 0 0 15px; text-align: justify; }
+  .passage p:last-child { margin-bottom: 0; }
+
+  .questions { padding: 22px 22px 8px; }
+  .questions > h2 {
+    font: 700 13px/1.4 -apple-system, "Segoe UI", sans-serif;
+    color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin: 0 0 16px;
+  }
+  .question {
+    border-top: 1px solid var(--line); padding: 16px 0 14px;
+    font-family: -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif;
+  }
+  .question:first-of-type { border-top: 0; padding-top: 0; }
+  .q-stem { font-weight: 600; font-size: 14.5px; line-height: 1.55; margin-bottom: 10px; }
+  .opt {
+    display: flex; gap: 9px; align-items: flex-start; padding: 7px 9px;
+    border-radius: 9px; cursor: pointer; font-size: 13.5px; line-height: 1.5;
+  }
+  .opt:hover { background: #f1f5f9; }
+  .opt input { margin-top: 3px; accent-color: var(--accent); }
+  .opt-text { color: #374151; }
+
+  .drill { padding: 24px 26px 18px; }
+  .drill-intro {
+    font: 13px/1.6 -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif;
+    color: var(--muted); margin: 0 0 6px;
+  }
+  .drill-item {
+    border-top: 1px dashed var(--line); padding: 15px 0 10px;
+    font-family: -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif;
+  }
+  .drill-item:first-of-type { border-top: 0; }
+  .drill-stem { font-size: 14.5px; font-weight: 600; line-height: 1.55; }
+  .drill-stem .num {
+    display: inline-block; min-width: 20px; color: var(--accent);
+    font-weight: 700; margin-right: 4px;
+  }
+  .drill-task { font: 12.5px/1.6 -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif; color: var(--muted); margin: 5px 0 8px; }
+  .drill-task b { color: #b45309; font-weight: 600; }
+  .answer-input {
+    width: 100%; border: 0; border-bottom: 1.5px solid #cbd5e1; background: transparent;
+    padding: 7px 2px; font: 15px/1.5 "Georgia", "Times New Roman", serif; color: var(--ink);
+  }
+  .answer-input::placeholder { color: #cbd5e1; font-style: italic; }
+  .answer-input:focus { outline: none; border-color: var(--accent); background: #f8fafc; }
+
+  details.keys { margin-top: 18px; border-top: 1px solid var(--line); padding-top: 12px; }
+  details.keys summary {
+    cursor: pointer; font: 600 12.5px/1.5 -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif;
+    color: var(--accent); list-style: none;
+  }
+  details.keys summary::-webkit-details-marker { display: none; }
+  details.keys summary::before { content: "▸ "; }
+  details.keys[open] summary::before { content: "▾ "; }
+  details.keys ol {
+    margin: 10px 0 4px; padding-left: 22px;
+    font: 13.5px/1.85 -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif; color: #374151;
+  }
+  details.keys .note { font: 12px/1.6 -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif; color: var(--muted); margin: 6px 0 0; }
+
+  footer {
+    max-width: 1020px; margin: 0 auto; padding: 0 18px 34px;
+    font: 12px/1.6 -apple-system, "Segoe UI", sans-serif; color: #94a3b8;
+  }
+  @media (max-width: 820px) {
+    .reading-set { grid-template-columns: 1fr; }
+    .passage { padding: 22px; }
+    .passage h1 { font-size: 24px; }
+    .drill { padding: 20px 18px 14px; }
+    .page-head h1 { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+<div class="topbar">English Reading <span>·</span> Practice Set 2 <span>·</span> Reading &amp; Sentence Work</div>
+<div class="wrap">
+
+  <header class="page-head">
+    <div class="page-kicker">Practice Set 2</div>
+    <h1>Reading &amp; Sentence Work</h1>
+    <p class="page-sub">Two passages with 12 multiple-choice questions, 10 sentence transformations and 6 error-correction items.
+      Try each part first; <b>the answer key is folded under every part</b> — click “参考答案” to check.</p>
+  </header>
+
+  <section class="part">
+    <div class="part-head"><span class="part-no">A</span><h2>Reading Comprehension · Informational text</h2><span class="part-note">6 questions</span></div>
+    <div class="reading-set">
+
+      <article class="passage">
+        <div class="passage-kicker">Reading Comprehension · Urban Science</div>
+        <h1>The Quiet Work of Urban Trees</h1>
+        <div class="byline">Original text written for this practice page · B2–C1 level</div>
+
+        <p>Stand on a street lined with lindens on a July afternoon, then walk one block to a street with nothing but asphalt, and you can feel the difference before you can explain it: five degrees cooler, perhaps more. Part of that relief is shade, which keeps sunlight from reaching the pavement at all. The rest comes from the leaves themselves. Water drawn up through the roots escapes as vapour through tiny pores, and every gram that evaporates carries heat away with it. A single mature tree can do the work of several small air conditioners, and it does so without a power cord.</p>
+
+        <p>Temperature is only the beginning. Leaves are slightly rough and faintly sticky surfaces, and dust, pollen and diesel soot settle on them; when it rains, much of that load is washed to the ground and away. The canopy also slows falling water, so that it reaches the soil in drops rather than in a torrent, and roots and leaf litter hold it there. In a city where a heavy storm can fill the drains in twenty minutes, a row of trees along the curb works as a quiet kind of plumbing. One study of a mid-sized American city estimated that its street trees intercepted hundreds of millions of litres of rainfall a year.</p>
+
+        <p>And yet the life of a street tree is not an easy one. The soil it stands in is often a compacted remnant, squeezed by decades of feet and tyres until water can barely enter. In winter it is salted; in summer it is asked to survive on whatever rain reaches it, because the budget that paid for the sapling rarely covers the watering can. Roots are cut for pipes, branches for power lines, trunks for parking spaces. A tree in a forest may live for a century; the same species in a narrow city pit is often replaced every fifteen or twenty years, and each removal costs more than the planting that came before it.</p>
+
+        <p>None of this is an argument against planting. It is an argument for planning. Cities that have made progress — Melbourne, Singapore, Rotterdam — tend to do the same three things: they give roots real volume to grow in, they plant a mix of species so that one pest cannot erase a whole avenue, and they treat the trees as infrastructure with a maintenance schedule rather than as decoration with a ceremony. The results are not dramatic in any single season. That is rather the point. A street tree is a piece of public equipment designed to run for eighty years, and the only fair way to judge it is over that span.</p>
+      </article>
+
+      <section class="questions">
+        <h2>Choose the best answer for each question.</h2>
+
+        <div class="question" data-q="1">
+          <div class="q-stem">1. Which sentence best states the main idea of the passage?</div>
+          <label class="opt"><input type="radio" name="a1"><span class="opt-text">A. City trees are more valuable than the trees of a forest.</span></label>
+          <label class="opt"><input type="radio" name="a1"><span class="opt-text">B. Street trees give real benefits, but only where cities plan and pay for their care.</span></label>
+          <label class="opt"><input type="radio" name="a1"><span class="opt-text">C. Planting trees is the cheapest way to cool a city down.</span></label>
+          <label class="opt"><input type="radio" name="a1"><span class="opt-text">D. Air conditioning should replace trees in hot cities.</span></label>
+        </div>
+
+        <div class="question" data-q="2">
+          <div class="q-stem">2. According to Paragraph 1, how do trees lower the air temperature?</div>
+          <label class="opt"><input type="radio" name="a2"><span class="opt-text">A. By blocking the wind that would otherwise reach the street.</span></label>
+          <label class="opt"><input type="radio" name="a2"><span class="opt-text">B. By releasing chemicals that cool the pavement.</span></label>
+          <label class="opt"><input type="radio" name="a2"><span class="opt-text">C. By shading surfaces and by releasing water vapour that carries heat away.</span></label>
+          <label class="opt"><input type="radio" name="a2"><span class="opt-text">D. By taking sunlight into their trunks and storing it.</span></label>
+        </div>
+
+        <div class="question" data-q="3">
+          <div class="q-stem">3. The word “intercepted” in Paragraph 2 is closest in meaning to ___.</div>
+          <label class="opt"><input type="radio" name="a3"><span class="opt-text">A. caught and held before it could go further</span></label>
+          <label class="opt"><input type="radio" name="a3"><span class="opt-text">B. measured with great accuracy</span></label>
+          <label class="opt"><input type="radio" name="a3"><span class="opt-text">C. allowed to pass through slowly</span></label>
+          <label class="opt"><input type="radio" name="a3"><span class="opt-text">D. carried away to another place</span></label>
+        </div>
+
+        <div class="question" data-q="4">
+          <div class="q-stem">4. Why does the writer mention “the budget that paid for the sapling”?</div>
+          <label class="opt"><input type="radio" name="a4"><span class="opt-text">A. To show that young trees are expensive to buy.</span></label>
+          <label class="opt"><input type="radio" name="a4"><span class="opt-text">B. To suggest that cities should stop planting trees.</span></label>
+          <label class="opt"><input type="radio" name="a4"><span class="opt-text">C. To explain why trees are planted in narrow pits.</span></label>
+          <label class="opt"><input type="radio" name="a4"><span class="opt-text">D. To point out that planting is funded while later care often is not.</span></label>
+        </div>
+
+        <div class="question" data-q="5">
+          <div class="q-stem">5. What can be inferred from Paragraph 3?</div>
+          <label class="opt"><input type="radio" name="a5"><span class="opt-text">A. Street trees mostly die of old age.</span></label>
+          <label class="opt"><input type="radio" name="a5"><span class="opt-text">B. Forest trees suffer more from pests than street trees do.</span></label>
+          <label class="opt"><input type="radio" name="a5"><span class="opt-text">C. The short life of street trees is largely a result of conditions people create.</span></label>
+          <label class="opt"><input type="radio" name="a5"><span class="opt-text">D. Narrow city pits are better for roots than open ground.</span></label>
+        </div>
+
+        <div class="question" data-q="6">
+          <div class="q-stem">6. What is the writer's main purpose?</div>
+          <label class="opt"><input type="radio" name="a6"><span class="opt-text">A. To argue that cities should treat street trees as long-term infrastructure.</span></label>
+          <label class="opt"><input type="radio" name="a6"><span class="opt-text">B. To describe one city's annual tree-planting ceremony.</span></label>
+          <label class="opt"><input type="radio" name="a6"><span class="opt-text">C. To compare the price of trees in three countries.</span></label>
+          <label class="opt"><input type="radio" name="a6"><span class="opt-text">D. To warn readers that trees damage underground pipes.</span></label>
+        </div>
+
+        <details class="keys">
+          <summary>参考答案</summary>
+          <ol>
+            <li>B</li>
+            <li>C</li>
+            <li>A（intercept = 拦截、截住，使水未流失先被拦下）</li>
+            <li>D</li>
+            <li>C</li>
+            <li>A</li>
+          </ol>
+        </details>
+      </section>
+
+    </div>
+  </section>
+
+  <section class="part">
+    <div class="part-head"><span class="part-no">B</span><h2>Reading Comprehension · Short story</h2><span class="part-note">6 questions</span></div>
+    <div class="reading-set">
+
+      <article class="passage">
+        <div class="passage-kicker">Reading Comprehension · Narrative</div>
+        <h1>Eleven Minutes</h1>
+        <div class="byline">Original text written for this practice page · B2 level</div>
+
+        <p>Mira counted the till for the third time, and the numbers still refused to agree. By the time she found the mistake — a ten-yuan note folded in with the receipts — the clock above the oven said 23:12. The last train left at 23:40. She pulled on her coat, called a goodbye to nobody in particular, and ran.</p>
+
+        <p>The street was nearly empty. A bus sighed past without stopping. She reached the station with four minutes to spare and took the stairs two at a time. Halfway along the platform an old man ahead of her stumbled, and a small black case swung out of his hand and struck the tiles. The catch sprang open. Sheet music slid out in a white fan, and the man stood looking down at it as though he had forgotten what hands were for.</p>
+
+        <p>Mira looked at the clock. Then she knelt and began gathering pages, chasing one that the draft from the tunnel kept nudging toward the edge. The old man crouched beside her, saying thank you in a language she did not know and did not need. Behind them the train doors chimed once, twice, and closed.</p>
+
+        <p>“You missed it,” he said, in careful English. It was not a question.</p>
+
+        <p>“There's another in twenty minutes,” Mira said, though she knew there was not.</p>
+
+        <p>He opened the case properly then and lifted out the violin. “Then I will play for you,” he said, “so that you are not late for nothing.”</p>
+
+        <p>He played for eleven minutes. The platform emptied and filled and emptied again. A cleaner leaned on her cart and did not move. When the last train finally came, Mira got on with the tune still in her head, and the strange, steady happiness of someone who has lost twenty minutes and been paid in something else.</p>
+      </article>
+
+      <section class="questions">
+        <h2>Choose the best answer for each question.</h2>
+
+        <div class="question" data-q="1">
+          <div class="q-stem">1. Why was Mira in a hurry?</div>
+          <label class="opt"><input type="radio" name="b1"><span class="opt-text">A. She had to catch the last train after a late shift.</span></label>
+          <label class="opt"><input type="radio" name="b1"><span class="opt-text">B. She was meeting the old man for a music lesson.</span></label>
+          <label class="opt"><input type="radio" name="b1"><span class="opt-text">C. She had left her violin at the bakery.</span></label>
+          <label class="opt"><input type="radio" name="b1"><span class="opt-text">D. She wanted to avoid the cleaner on the platform.</span></label>
+        </div>
+
+        <div class="question" data-q="2">
+          <div class="q-stem">2. What made her miss the train?</div>
+          <label class="opt"><input type="radio" name="b2"><span class="opt-text">A. The bus did not stop for her.</span></label>
+          <label class="opt"><input type="radio" name="b2"><span class="opt-text">B. She stopped to gather the old man's scattered sheet music.</span></label>
+          <label class="opt"><input type="radio" name="b2"><span class="opt-text">C. She could not find the right platform.</span></label>
+          <label class="opt"><input type="radio" name="b2"><span class="opt-text">D. The station clock was running fast.</span></label>
+        </div>
+
+        <div class="question" data-q="3">
+          <div class="q-stem">3. The sentence “the man stood looking down at it as though he had forgotten what hands were for” suggests that ___.</div>
+          <label class="opt"><input type="radio" name="b3"><span class="opt-text">A. he was too shaken to pick anything up.</span></label>
+          <label class="opt"><input type="radio" name="b3"><span class="opt-text">B. he had injured both of his hands.</span></label>
+          <label class="opt"><input type="radio" name="b3"><span class="opt-text">C. he pretended not to see the pages.</span></label>
+          <label class="opt"><input type="radio" name="b3"><span class="opt-text">D. he wanted Mira to keep the music.</span></label>
+        </div>
+
+        <div class="question" data-q="4">
+          <div class="q-stem">4. Why does the writer add “It was not a question”?</div>
+          <label class="opt"><input type="radio" name="b4"><span class="opt-text">A. To show that the man already knew the answer.</span></label>
+          <label class="opt"><input type="radio" name="b4"><span class="opt-text">B. To show that the man was angry with Mira.</span></label>
+          <label class="opt"><input type="radio" name="b4"><span class="opt-text">C. To explain that Mira could not hear him.</span></label>
+          <label class="opt"><input type="radio" name="b4"><span class="opt-text">D. To suggest that the man spoke no English.</span></label>
+        </div>
+
+        <div class="question" data-q="5">
+          <div class="q-stem">5. What does the last paragraph suggest about Mira?</div>
+          <label class="opt"><input type="radio" name="b5"><span class="opt-text">A. She regretted missing the train.</span></label>
+          <label class="opt"><input type="radio" name="b5"><span class="opt-text">B. She decided never to work late again.</span></label>
+          <label class="opt"><input type="radio" name="b5"><span class="opt-text">C. She felt the delay had given her something worth more than the time.</span></label>
+          <label class="opt"><input type="radio" name="b5"><span class="opt-text">D. She was annoyed by the cleaner's staring.</span></label>
+        </div>
+
+        <div class="question" data-q="6">
+          <div class="q-stem">6. Which would be the best title for the story?</div>
+          <label class="opt"><input type="radio" name="b6"><span class="opt-text">A. The Bakery Ledger</span></label>
+          <label class="opt"><input type="radio" name="b6"><span class="opt-text">B. Eleven Minutes on the Platform</span></label>
+          <label class="opt"><input type="radio" name="b6"><span class="opt-text">C. The Last Train of the Year</span></label>
+          <label class="opt"><input type="radio" name="b6"><span class="opt-text">D. A Violin for Sale</span></label>
+        </div>
+
+        <details class="keys">
+          <summary>参考答案</summary>
+          <ol>
+            <li>A</li>
+            <li>B</li>
+            <li>A</li>
+            <li>A</li>
+            <li>C</li>
+            <li>B</li>
+          </ol>
+        </details>
+      </section>
+
+    </div>
+  </section>
+
+  <section class="part">
+    <div class="part-head"><span class="part-no">C</span><h2>改语句 · Sentence transformation</h2><span class="part-note">10 items</span></div>
+    <div class="drill">
+      <p class="drill-intro">Rewrite each sentence as required, keeping the meaning unchanged. Write the whole new sentence.</p>
+
+      <div class="drill-item">
+        <div class="drill-stem"><span class="num">1.</span> The storm destroyed the bridge.</div>
+        <div class="drill-task">改为被动语态：The bridge ___</div>
+        <input class="answer-input" type="text" placeholder="Write the full sentence…">
+      </div>
+
+      <div class="drill-item">
+        <div class="drill-stem"><span class="num">2.</span> “I will call you tomorrow,” she said.</div>
+        <div class="drill-task">改为间接引语（注意人称、时态和时间状语）</div>
+        <input class="answer-input" type="text" placeholder="Write the full sentence…">
+      </div>
+
+      <div class="drill-item">
+        <div class="drill-stem"><span class="num">3.</span> The box was so heavy that I couldn't lift it.</div>
+        <div class="drill-task">用 <b>too … to</b> 改写</div>
+        <input class="answer-input" type="text" placeholder="Write the full sentence…">
+      </div>
+
+      <div class="drill-item">
+        <div class="drill-stem"><span class="num">4.</span> He finished his homework. Then he went out for a walk.</div>
+        <div class="drill-task">用 <b>After</b> 开头合并成一句（可加 -ing 或完成式分词）</div>
+        <input class="answer-input" type="text" placeholder="Write the full sentence…">
+      </div>
+
+      <div class="drill-item">
+        <div class="drill-stem"><span class="num">5.</span> Although it rained heavily, they continued the game.</div>
+        <div class="drill-task">用 <b>In spite of</b> 改写</div>
+        <input class="answer-input" type="text" placeholder="Write the full sentence…">
+      </div>
+
+      <div class="drill-item">
+        <div class="drill-stem"><span class="num">6.</span> I have never seen such a beautiful sunset.</div>
+        <div class="drill-task">改为倒装句（否定词提前）</div>
+        <input class="answer-input" type="text" placeholder="Write the full sentence…">
+      </div>
+
+      <div class="drill-item">
+        <div class="drill-stem"><span class="num">7.</span> “Don't touch the wire,” the technician said to us.</div>
+        <div class="drill-task">用 <b>warn sb. not to do sth.</b> 改写</div>
+        <input class="answer-input" type="text" placeholder="Write the full sentence…">
+      </div>
+
+      <div class="drill-item">
+        <div class="drill-stem"><span class="num">8.</span> If you don't hurry, you will miss the train.</div>
+        <div class="drill-task">用 <b>Unless</b> 改写</div>
+        <input class="answer-input" type="text" placeholder="Write the full sentence…">
+      </div>
+
+      <div class="drill-item">
+        <div class="drill-stem"><span class="num">9.</span> The girl is my sister. She is playing the piano.</div>
+        <div class="drill-task">用定语从句合并成一句</div>
+        <input class="answer-input" type="text" placeholder="Write the full sentence…">
+      </div>
+
+      <div class="drill-item">
+        <div class="drill-stem"><span class="num">10.</span> He is too young to drive a car.</div>
+        <div class="drill-task">用 <b>so … that</b> 改写</div>
+        <input class="answer-input" type="text" placeholder="Write the full sentence…">
+      </div>
+
+      <details class="keys">
+        <summary>参考答案</summary>
+        <ol>
+          <li>The bridge was destroyed by the storm.</li>
+          <li>She said (that) she would call me the next day.</li>
+          <li>The box was too heavy for me to lift.</li>
+          <li>After finishing his homework, he went out for a walk.（或 After he had finished his homework, … / Having finished his homework, …）</li>
+          <li>In spite of the heavy rain, they continued the game.</li>
+          <li>Never have I seen such a beautiful sunset.</li>
+          <li>The technician warned us not to touch the wire.</li>
+          <li>Unless you hurry, you will miss the train.</li>
+          <li>The girl who is playing the piano is my sister.</li>
+          <li>He is so young that he cannot drive a car.</li>
+        </ol>
+        <p class="note">改句答案不唯一，只要结构正确、意思不变即可。</p>
+      </details>
+    </div>
+  </section>
+
+  <section class="part">
+    <div class="part-head"><span class="part-no">D</span><h2>改错 · Error correction</h2><span class="part-note">6 items</span></div>
+    <div class="drill">
+      <p class="drill-intro">Each sentence contains one error. Rewrite the sentence correctly.</p>
+
+      <div class="drill-item">
+        <div class="drill-stem"><span class="num">1.</span> She suggested to go to the cinema.</div>
+        <input class="answer-input" type="text" placeholder="Corrected sentence…">
+      </div>
+
+      <div class="drill-item">
+        <div class="drill-stem"><span class="num">2.</span> The number of students in our school are increasing.</div>
+        <input class="answer-input" type="text" placeholder="Corrected sentence…">
+      </div>
+
+      <div class="drill-item">
+        <div class="drill-stem"><span class="num">3.</span> I look forward to hear from you soon.</div>
+        <input class="answer-input" type="text" placeholder="Corrected sentence…">
+      </div>
+
+      <div class="drill-item">
+        <div class="drill-stem"><span class="num">4.</span> He has been married with a doctor for ten years.</div>
+        <input class="answer-input" type="text" placeholder="Corrected sentence…">
+      </div>
+
+      <div class="drill-item">
+        <div class="drill-stem"><span class="num">5.</span> Neither of the answers were correct.</div>
+        <input class="answer-input" type="text" placeholder="Corrected sentence…">
+      </div>
+
+      <div class="drill-item">
+        <div class="drill-stem"><span class="num">6.</span> If I will have time, I will join you.</div>
+        <input class="answer-input" type="text" placeholder="Corrected sentence…">
+      </div>
+
+      <details class="keys">
+        <summary>参考答案</summary>
+        <ol>
+          <li>She suggested going to the cinema.（suggest doing sth.）</li>
+          <li>The number of students in our school is increasing.（the number of … 谓语用单数）</li>
+          <li>I look forward to hearing from you soon.（look forward to doing sth.）</li>
+          <li>He has been married to a doctor for ten years.（be married to sb.）</li>
+          <li>Neither of the answers was correct.（neither of … 谓语用单数）</li>
+          <li>If I have time, I will join you.（条件状语从句用一般现在时表将来）</li>
+        </ol>
+      </details>
+    </div>
+  </section>
+
+</div>
+<footer>
+  <a href="english-reading.html">← Practice Set 1 · Down the Rabbit-Hole</a> ·
+  Answers are model answers; sentence rewriting may have more than one correct form.
+</footer>
+</body>
+</html>

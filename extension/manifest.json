@@ -1,0 +1,58 @@
+{
+  "manifest_version": 3,
+  "name": "QuizLens 练习助手",
+  "version": "1.7.8",
+  "minimum_chrome_version": "103",
+  "description": "在答题网页上识别题目并自动填涂，支持题库匹配与 AI 作答；只填答案，不替你交卷。请遵守所在平台的使用规则。",
+  "permissions": [
+    "storage"
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "bank/index.json",
+        "bank/*.json",
+        "whitelist.txt",
+        "docs/user-guide.html",
+        "docs/disclaimer.html",
+        "docs/images/*",
+        "icons/*.png"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "all_frames": false
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "QuizLens 练习助手",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png"
+    }
+  }
+}

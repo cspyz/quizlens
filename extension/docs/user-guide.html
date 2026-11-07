@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QuizLens 练习助手 · 使用说明</title>
+<style>
+  :root {
+    --bg: #f6f8fb;
+    --surface: #fff;
+    --border: #eef1f5;
+    --text: #1e293b;
+    --text-secondary: #64748b;
+    --text-muted: #94a3b8;
+    --accent: #2563eb;
+    --accent-light: #eef2ff;
+    --accent-text: #4f46e5;
+    --warning: #b45309;
+    --warning-bg: #fffbeb;
+    --warning-border: #fde68a;
+    --info: #0369a1;
+    --info-bg: #f0f9ff;
+    --info-border: #bae6fd;
+    --success: #15803d;
+    --success-bg: #f0fdf4;
+    --success-border: #bbf7d0;
+    --code-bg: #f1f5f9;
+    --code-text: #334155;
+    --radius: 10px;
+    --radius-sm: 8px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 14px;
+  }
+
+  /* ========== 顶部导航 ========== */
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    height: 52px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .topbar .logo {
+    width: 28px; height: 28px; border-radius: 8px;
+    display: block; object-fit: contain; flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(37, 99, 235, .12);
+  }
+  .topbar h1 { font-size: 16px; font-weight: 600; color: #0f172a; }
+  .topbar .spacer { flex: 1; }
+  .toc-toggle {
+    font-size: 13px; padding: 6px 14px;
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+    background: var(--surface); color: var(--text-secondary);
+    cursor: pointer; font-family: inherit;
+  }
+  .toc-toggle:hover { background: var(--bg); }
+
+  /* ========== 主体布局 ========== */
+  .layout {
+    display: flex;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 24px;
+    gap: 24px;
+    align-items: flex-start;
+  }
+
+  /* ========== 侧边目录 ========== */
+  .toc {
+    width: 230px; flex-shrink: 0;
+    position: sticky; top: 76px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px;
+    font-size: 13px;
+  }
+  .toc-title {
+    font-size: 12px; font-weight: 600; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: .05em;
+    margin-bottom: 8px; padding: 0 6px;
+  }
+  .toc a {
+    display: block; padding: 6px 10px;
+    color: var(--text-secondary); text-decoration: none;
+    border-radius: 6px; transition: background .15s;
+  }
+  .toc a:hover { background: var(--bg); color: var(--accent); }
+  .toc a.active { background: var(--accent-light); color: var(--accent-text); font-weight: 500; }
+
+  /* ========== 内容区 ========== */
+  .content {
+    flex: 1; min-width: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px 36px 40px;
+  }
+
+  h2 {
+    font-size: 18px; font-weight: 650; color: #0f172a;
+    margin: 40px 0 16px; padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+  h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+
+  h3 {
+    font-size: 15px; font-weight: 600; color: #0f172a;
+    margin: 26px 0 10px;
+  }
+
+  p { margin: 10px 0; }
+  strong { font-weight: 650; color: #0f172a; }
+  code {
+    background: var(--code-bg); color: var(--code-text);
+    padding: 1px 6px; border-radius: 4px;
+    font-family: "SF Mono", "Cascadia Code", Consolas, monospace;
+    font-size: .88em;
+  }
+  hr { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+
+  /* 列表 */
+  ul, ol { margin: 10px 0 10px 22px; }
+  li { margin: 4px 0; }
+
+  /* 表格 */
+  table {
+    width: 100%; border-collapse: collapse; margin: 14px 0;
+    font-size: 13px; border: 1px solid var(--border);
+    border-radius: var(--radius-sm); overflow: hidden;
+  }
+  th {
+    background: #f8fafc; text-align: left;
+    padding: 9px 12px; font-weight: 600; color: var(--text-secondary);
+    border-bottom: 1px solid var(--border); font-size: 12px;
+  }
+  td { padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: #fafbfc; }
+
+  /* 提示框 */
+  .callout {
+    border-radius: var(--radius-sm);
+    padding: 12px 16px; margin: 14px 0;
+    font-size: 13px; line-height: 1.65;
+    border: 1px solid;
+  }
+  .callout-warning {
+    background: var(--warning-bg); border-color: var(--warning-border); color: var(--warning);
+  }
+  .callout-info {
+    background: var(--info-bg); border-color: var(--info-border); color: var(--info);
+  }
+  .callout-success {
+    background: var(--success-bg); border-color: var(--success-border); color: var(--success);
+  }
+  .callout-title {
+    font-weight: 650; margin-bottom: 4px;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  /* 顶部简介 */
+  .intro {
+    background: var(--accent-light);
+    border: 1px solid #c7d2fe;
+    border-radius: var(--radius);
+    padding: 18px 20px; margin-bottom: 28px;
+    color: var(--accent-text); font-size: 13px; line-height: 1.7;
+  }
+
+  /* 配置项标签 */
+  .setting-tag {
+    display: inline-block;
+    background: var(--code-bg); color: var(--code-text);
+    padding: 1px 8px; border-radius: 4px;
+    font-family: "SF Mono", Consolas, monospace;
+    font-size: 12px; font-weight: 500;
+  }
+
+  /* 图文教程 */
+  .tutorial-fig { margin: 18px 0 26px; }
+  .tutorial-fig a { display: block; }
+  .tutorial-fig img {
+    display: block; width: 100%; height: auto;
+    border: 1px solid var(--border); border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(30, 41, 59, .08);
+    background: #fff; cursor: zoom-in;
+  }
+  .tutorial-fig figcaption {
+    margin-top: 9px; font-size: 12.5px; color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .tutorial-steps { margin: 12px 0 0 22px; }
+  .tutorial-steps li { margin: 8px 0; }
+  .tutorial-steps b { color: var(--text); }
+
+  /* 响应式 */
+  @media (max-width: 880px) {
+    .layout { flex-direction: column; padding: 16px; }
+    .toc { width: 100%; position: static; }
+    .content { padding: 24px 20px; }
+    .toc { display: none; }
+    .toc.open { display: block; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <img class="logo" src="images/logo.png" alt="">
+  <h1>QuizLens 练习助手 · 使用说明</h1>
+  <div class="spacer"></div>
+  <button class="toc-toggle" onclick="document.querySelector('.toc').classList.toggle('open')">☰ 目录</button>
+</div>
+
+<div class="layout">
+
+  <!-- ========== 侧边目录 ========== -->
+  <nav class="toc">
+    <div class="toc-title">目录</div>
+    <a href="#tutorial">图文教程（先看这里）</a>
+    <a href="#usage-boundary">使用边界（必读）</a>
+    <a href="#output-mode">一、输出模式</a>
+    <a href="#answer-mode">二、答题模式</a>
+    <a href="#interval">三、每题间隔</a>
+    <a href="#concurrency">四、AI 并发作答</a>
+    <a href="#fuzzy">五、模糊匹配阈值</a>
+    <a href="#bank-url">六、题库地址</a>
+    <a href="#panel-toggle">七、答题时显示面板</a>
+    <a href="#ai-config">八、AI 配置</a>
+    <a href="#buttons">九、三个入口按钮</a>
+    <a href="#privacy">十、隐私说明</a>
+    <a href="disclaimer.html">免责声明（全文）›</a>
+  </nav>
+
+  <!-- ========== 正文 ========== -->
+  <main class="content">
+
+    <div class="callout callout-warning" id="submit-boundary">
+      <div class="callout-title">交卷边界（先看这一段）</div>
+      <b>插件只填答案，永远不会替你交卷。</b>提交/交卷按钮始终由你自己点。<br>
+      当前版本不再拦截、也不再二次确认页面上的提交/交卷操作；如果页面本身有确认框，按页面提示操作即可。<br><br>
+      作答结束时页面右下角会出现一条提示：<b>「已填 N 题，还有 M 道没答上，请自己点提交」</b>，
+      点它可以打开面板看未答清单。这条提示<b>与「答题时显示面板」开关无关</b>，默认就会显示。
+    </div>
+
+    <div class="callout callout-warning" id="usage-boundary">
+      <div class="callout-title">使用边界（请先读这一段）</div>
+      本插件是<b>练习 / 自测辅助工具</b>，不是考试工具。<br>
+      <b>判据：只要这一份作答会被打分、被记录、被当作证据，或需要证明是你本人独立完成的，就不要用。</b>无法判断时，视为不允许。<br>
+      · 请只在你<b>有权作答</b>的页面上使用；<br>
+      · <b>正式考试、在线测评、监考环境请勿使用</b>；<br>
+      · 是否合规由<b>你所在院校的规定</b>与<b>平台服务条款</b>决定，插件无从判断，作者也不代为判断；<br>
+      · 因使用本插件导致的任何后果（平台封禁、成绩作废、学校处分等）由使用者自行承担；<br>
+      · 插件<b>不会、也不能</b>替你交卷——提交按钮始终由你本人点击。<br>
+      完整条款（责任承担、担保排除、题库数据授权切割、再分发建议）见
+      <a href="disclaimer.html" style="color:var(--accent-text);font-weight:650">免责声明</a>（仓库 <code>DISCLAIMER.md</code>）。
+    </div>
+
+    <div class="intro">
+      前面是带箭头的图文教程，后面是弹窗设置项详解。<br>
+      弹窗本体只保留简短提示，需要了解「为什么这么设、会影响什么」时看这份。
+    </div>
+
+    <!-- ========== 图文教程 ========== -->
+    <h2 id="tutorial">图文教程：从配置到作答</h2>
+
+    <p>下面的截图都来自真实插件界面，图上的编号就是操作顺序。点击图片可以看大图。</p>
+
+    <figure class="tutorial-fig">
+      <a href="images/01-popup-overview.webp" target="_blank" rel="noopener" title="点击查看原图">
+        <img src="images/01-popup-overview.webp" alt="插件弹窗总览：1 模型页配置 AI，2 选择输出模式，3 选择答题模式，4 勾选显示面板，5 开始答题，6 停止，7 识别题目" loading="lazy">
+      </a>
+      <figcaption>
+        <b>图 1 · 弹窗总览。</b>① 先到「模型」页填 AI 配置；②③ 选输出模式和答题模式；
+        ④ 想边答边看日志，就勾选「答题时显示面板」；⑤ 点「开始答题」逐题作答；
+        ⑥ 中途结束点「停止」；⑦ 只想看答案点「识别题目」。
+      </figcaption>
+    </figure>
+
+    <h3>第 1 步：填 AI 配置（用 AI 模式时）</h3>
+    <p>点弹窗顶部的「模型」页，按图 2 填写。填完点「测试连接」，能连上再开始答题。只用题库、不调 AI 时可以跳过。</p>
+
+    <figure class="tutorial-fig">
+      <a href="images/02-ai-config.webp" target="_blank" rel="noopener" title="点击查看原图">
+        <img src="images/02-ai-config.webp" alt="AI 配置：1 AI Base URL，2 API Key，3 模型和拉取模型，4 测试连接，5 视觉模型" loading="lazy">
+      </a>
+      <figcaption>
+        <b>图 2 · AI 配置。</b>① Base URL 一般以 <code>/v1</code> 结尾；② 填自己的 API Key；
+        ③ 可手填模型，也可点「拉取模型」；④ 点「测试连接」确认能连上；
+        ⑤ 截图解题要单独填视觉模型。
+      </figcaption>
+    </figure>
+
+    <p>视觉模型和文本模型不是同一家时，把「模型」页往下滚，按图 3 填视觉 Base URL 和视觉 Key；同一家留空即可。</p>
+
+    <figure class="tutorial-fig">
+      <a href="images/03-vision-config.webp" target="_blank" rel="noopener" title="点击查看原图">
+        <img src="images/03-vision-config.webp" alt="视觉模型配置：1 视觉模型，2 视觉 Base URL，3 视觉 Key" loading="lazy">
+      </a>
+      <figcaption>
+        <b>图 3 · 视觉模型（截图解题）。</b>① 填支持看图的模型；
+        ② 不同厂商才填视觉 Base URL；③ 视觉 Key 留空就沿用上面的 Key。
+      </figcaption>
+    </figure>
+
+    <h3>第 2 步：开始答题或只看答案</h3>
+    <ol class="tutorial-steps">
+      <li><b>自动作答：</b>回「答题」页，确认答题模式为「题库 + AI」，点「开始答题」。插件逐题填涂，不会交卷。</li>
+      <li><b>只看答案：</b>点「识别题目」打开页面右侧的识别面板，答案只显示在面板里，不碰页面。</li>
+      <li><b>中途控制：</b>点「暂停」停在原地，点「停止」结束本轮；停止会中断正在等待的请求。</li>
+    </ol>
+
+    <h3>第 3 步：在识别面板里出答案、填涂或截图</h3>
+
+    <figure class="tutorial-fig">
+      <a href="images/04-panel.webp" target="_blank" rel="noopener" title="点击查看原图">
+        <img src="images/04-panel.webp" alt="识别面板：1 截图解题，2 暂停停止，3 题卡，4 出答案，5 填涂，6 重新扫描" loading="lazy">
+      </a>
+      <figcaption>
+        <b>图 4 · 识别面板。</b>① 右上角 📷 框选截图解题；② 暂停 / 停止本轮；
+        ③ 题卡里核对题干和答案；④ 「出答案」只计算，不碰页面；
+        ⑤ 「填涂」把答案点到页面上；⑥ 「重新扫描」刷新题目。
+      </figcaption>
+    </figure>
+
+    <p>面板可以拖动、缩放，也可以最小化成悬浮球（悬浮球上显示图标和题目数，点一下即可展开）。关闭面板不会停止正在进行的作答，要停请点面板里的「暂停 / 停止」或弹窗里的「停止」。</p>
+
+    <!-- ========== 一、输出模式 ========== -->
+    <h2 id="output-mode">一、输出模式（AI 回答给多少）</h2>
+
+    <p>控制 AI <strong>回复里到底给多少内容</strong>。三档：</p>
+
+    <table>
+      <thead>
+        <tr><th>模式</th><th>模型返回什么</th><th>思考模式</th><th>适用场景</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>只输出答案</strong></td>
+          <td>只有选项字母 / 填空内容，一个字的解释都没有</td>
+          <td>关</td>
+          <td>刷题、只想快点填完，最省 token；但答错时看不出原因</td>
+        </tr>
+        <tr>
+          <td><strong>答案 + 解析</strong>（默认）</td>
+          <td>第一行答案，空一行后一段简明解析（≤150 字）</td>
+          <td>关</td>
+          <td>日常默认；答错时能看懂为什么</td>
+        </tr>
+        <tr>
+          <td><strong>完整功能</strong></td>
+          <td>第一行答案，空一行后<strong>逐项详细解析</strong>（覆盖每个选项）</td>
+          <td>开</td>
+          <td>难题、需要推理过程；最慢最费 token，但正确率最高</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>使用上的几个约定</h3>
+    <ul>
+      <li><strong>答案和解析分开。</strong>填涂只使用答案；解析仅供你阅读，即使解析里出现「A 选项错误」这类字样，也不会被当成答案勾选。</li>
+      <li><strong>思考过程单独显示。</strong>「完整功能」模式下，题卡会多出一个「🧠 思考过程」块，思考内容不会混进答案，也不会写进页面。</li>
+      <li><strong>平台不支持思考时自动降级。</strong>插件会改按普通模式作答，并在题卡上提示，不会让整道题失败。</li>
+    </ul>
+
+    <h3>与「自动填涂」的关系</h3>
+    <p>这个开关<strong>只影响 AI 作答</strong>；题库命中的题本来就只有答案，与它无关。面板卡片会显示解析，但<strong>自动填涂始终只取答案</strong>，解析不会污染填涂。</p>
+
+    <hr>
+
+    <!-- ========== 二、答题模式 ========== -->
+    <h2 id="answer-mode">二、答题模式</h2>
+
+    <table>
+      <thead>
+        <tr><th>模式</th><th>行为</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>题库 + AI 兜底</strong>（推荐，默认）</td><td>先查题库，匹配不到的题发给大模型</td></tr>
+        <tr><td><strong>题库匹配</strong></td><td>只查题库，不调用 AI</td></tr>
+        <tr><td><strong>仅 AI</strong></td><td>全部题目都发给大模型</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-warning">
+      <div class="callout-title">「题库匹配」在真实网站上覆盖率可能很低</div>
+      题库约 <strong>11.4 万题</strong>（45 个类别），遇到不在库里的卷子会几乎全部「未匹配」，
+      且<strong>未命中的填空题在题库模式下无法作答</strong>。想让它真正答出题，请用
+      「<strong>题库 + AI 兜底</strong>」并填好 API Key。
+    </div>
+
+    <h3>题库从哪来（三个来源，按优先级依次尝试）</h3>
+    <table>
+      <thead>
+        <tr><th>优先级</th><th>来源</th><th>怎么用</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>①</td><td><strong>弹窗里的「题库地址」</strong></td><td>手填题库的站点地址。填了就优先用它</td></tr>
+        <tr><td>②</td><td><strong>插件目录里的 <code>bank/</code></strong></td><td>把题库包解压到 <code>extension/bank/</code> 即可，不需要配置。仓库不自带题库，安装步骤见 <code>extension/BANK.md</code></td></tr>
+        <tr><td>③</td><td><strong>当前网页自带的</strong> <code>./bank/</code></td><td>页面自己带题库时的兜底路径，什么都不用配</td></tr>
+      </tbody>
+    </table>
+
+    <p>题库请求由插件在后台发出，不受网页本身的跨域设置影响。</p>
+
+    <div class="callout callout-info">
+      <div class="callout-title">报错区分</div>
+      三个来源都没拿到时，日志会写清楚<strong>试过哪些来源、各自报什么错</strong>。
+      此时报错是「题库没有加载成功」—— <strong>不是</strong>「这道题没收录」，两者处理方式完全不同。
+    </div>
+
+    <hr>
+
+    <!-- ========== 三、每题间隔 ========== -->
+    <h2 id="interval">三、每题间隔（秒）</h2>
+
+    <p>取值范围 0~30，可以是小数（0.5）。</p>
+    <ul>
+      <li><strong>0 = 不额外等待</strong> —— 越快越好时用；但接口限流风险最高</li>
+      <li><strong>默认 1 秒</strong> —— 稳妥选择</li>
+      <li><strong>并发开启时</strong> —— N 个 worker「各歇各的」，总耗时约等于「最慢那批」而非「全部之和」</li>
+    </ul>
+
+    <p>这个值对「开始答题」和面板上的「⚡ 出答案 / ✍ 填涂」<strong>都生效</strong>。</p>
+
+    <hr>
+
+    <!-- ========== 四、AI 并发作答 ========== -->
+    <h2 id="concurrency">四、AI 并发作答</h2>
+
+    <p>把「问 AI」这一步并行化：默认最多同时向接口发 <strong>3 个</strong>请求（可调 1~5）。148 道题的卷子在「仅 AI」模式下能从十几分钟缩到几分钟。</p>
+
+    <h3>为什么答案不会乱</h3>
+    <p>把「取答案」和「写页面」拆成两件事：</p>
+
+    <table>
+      <thead>
+        <tr><th>阶段</th><th>做什么</th><th>并发？</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>取答案</td><td>只发请求拿答案，<strong>不碰页面</strong></td><td>✅ N 路并行</td></tr>
+        <tr><td>写页面</td><td>点选项 / 填输入框</td><td>❌ 严格按题序串行</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-warning">
+      <div class="callout-title">填涂为什么必须按题序</div>
+      点击是<strong>不可逆</strong>的。多选题有联动（「选 A 就禁用 B」），并发写会让页面状态错乱；
+      而且你喊停之后，不能还有一批结果排队往页面里写。
+    </div>
+
+    <p>所以即使第 5 题比第 1 题早返回，也会等前面的题写完后才填第 5 题。</p>
+
+    <h3>三个流水线都生效</h3>
+    <p>「开始答题」「⚡ 出答案」「✍ 填涂」三条都读这个设置。</p>
+
+    <h3>什么时候关掉</h3>
+    <ul>
+      <li>接口容易限流（429）</li>
+      <li>想看最保守、最可预测的行为</li>
+      <li>排查问题时想让请求一次只发一个</li>
+    </ul>
+
+    <div class="callout callout-info">
+      <div class="callout-title">上限锁 5</div>
+      再往上对接口压力太大、容易触发限流，而收益会被固定开销摊薄。
+    </div>
+
+    <hr>
+
+    <!-- ========== 五、模糊匹配阈值 ========== -->
+    <h2 id="fuzzy">五、模糊匹配阈值</h2>
+
+    <p>题干相似度 ≥ 此值才算同一题。默认 <span class="setting-tag">75</span>，范围 50~95。</p>
+    <ul>
+      <li><strong>调高更严格</strong>（更容易「未匹配」）—— 误配风险低，但漏匹配多</li>
+      <li><strong>调低更宽松</strong>（更容易误配到别的题）—— 命中多，但可能填错</li>
+    </ul>
+
+    <div class="callout callout-warning">
+      <div class="callout-title">调到 50 也不会无限放宽</div>
+      另有一道「共同内容不能太少」的下限：题干与题库题共享的文字太少时，即使相似度分数够高也不会判定为同一题。
+      这样可以避免页面题干只是某道题的一小段，却被误判成命中。
+    </div>
+
+    <hr>
+
+    <!-- ========== 六、题库地址 ========== -->
+    <h2 id="bank-url">六、题库地址</h2>
+
+    <p>填了就优先用这个地址的题库，<strong>任何网页都生效</strong>。</p>
+    <ul>
+      <li>请求由后台代理发出，<strong>不受跨域限制</strong></li>
+      <li>本地 http 服务、内网地址、云端静态站点都可以</li>
+    </ul>
+
+    <p><strong>留空</strong>则依次尝试：插件目录里的 <code>bank/</code>（需自行解压安装）→ 当前网页自带的 <code>./bank/</code>。</p>
+
+    <hr>
+
+    <!-- ========== 七、答题时显示面板 ========== -->
+    <h2 id="panel-toggle">七、答题时显示面板</h2>
+
+    <p>默认<strong>关</strong>。</p>
+
+    <table>
+      <thead>
+        <tr><th></th><th>行为</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>开</strong></td>
+          <td>答题时在页面上弹出<strong>同一个面板</strong>：上半部分是运行日志（可折叠）、下面是识别到的题卡，<strong>不再另开悬浮窗</strong>；面板里有「■ 停止答题」</td>
+        </tr>
+        <tr>
+          <td><strong>关</strong></td>
+          <td>不显示面板，插件在后台静默运行；需要停止时使用弹窗里的「停止」</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>不勾也随时能停 —— 用弹窗里的「<strong>停止</strong>」按钮即可，点下去<strong>立刻</strong>生效（在飞的请求会被中断，不会出现「点了没反应」）。</p>
+
+    <p><strong>面板功能</strong>：可拖动 / 可缩放（右下角把手）、位置和大小会记住、可折叠日志、可最小化成悬浮球、正在作答时点关闭会先弹确认。</p>
+
+    <hr>
+
+    <!-- ========== 八、AI 配置 ========== -->
+    <h2 id="ai-config">八、AI 配置</h2>
+
+    <ul>
+      <li><strong>AI Base URL</strong>：OpenAI 兼容接口。填完先点「<strong>测试连接</strong>」—— 连不上会提示检查 Base URL 是否以 <code>/v1</code> 结尾；连得上但列表里没有你填的模型，会 ⚠ 提示并列出可用模型。</li>
+      <li><strong>模型</strong>：可点「<strong>拉取模型</strong>」从平台获取列表，支持关键字过滤。</li>
+      <li><strong>API Key</strong>：选 AI 模式时必填，只在本机浏览器保存。</li>
+      <li><strong>视觉模型</strong>：📷 截图解题用，必须是支持看图的模型（如 <code>glm-4v-flash</code>，免费）。普通文本模型看不了图片，填了也会报错 —— 所以这一栏<strong>单独配置</strong>，不自动回退。</li>
+      <li><strong>视觉 Base URL / 视觉 Key</strong>：视觉模型常常和文本模型<strong>不是同一家</strong>（比如上面 AI 地址填的是 deepseek，而推荐的 <code>glm-4v-flash</code> 是智谱的）。同一家就<strong>留空</strong>，自动用上面的地址与 Key；不同家就把它自己的兼容端点和 Key 填在这一组里 —— 否则会报「模型不存在」，而报错原文看不出是地址配错了。</li>
+    </ul>
+
+    <hr>
+
+    <!-- ========== 九、三个入口按钮 ========== -->
+    <h2 id="buttons">九、三个入口按钮</h2>
+
+    <table>
+      <thead>
+        <tr><th>按钮</th><th>作用</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>开始答题</strong></td>
+          <td>自动填涂。默认放行全部站点；想限制域名就编辑插件目录里的 <code>whitelist.txt</code>，改完到扩展管理页「重新加载」</td>
+        </tr>
+        <tr>
+          <td><strong>停止</strong></td>
+          <td>立刻停止在飞请求</td>
+        </tr>
+        <tr>
+          <td><strong>识别页面题目</strong></td>
+          <td>扫描当前网页题目，答案显示在面板里（任何页面都能看答案）。面板上的「✍ 填涂」与「开始答题」<strong>受同一份站点白名单管</strong>：站点不在白名单里时填涂按钮禁用，只显示答案</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>「识别页面题目」的答案卡片</h3>
+    <p>「答案 + 解析」和「完整功能」模式会多出一段解析 —— 想填涂时点卡片上的「答」取答案即可，解析只显示、不会被写进页面。</p>
+    <p>页面上已经选中的题默认保留、不覆盖；如果希望按答案重新填，到弹窗打开「覆盖已选答案」（单选覆盖，多选会先清掉多余项再补齐）。</p>
+
+    <h3>「📷 截图解题」</h3>
+    <p>框选屏幕区域发给视觉模型看图答题，请填写视觉模型（<code>glm-4v-flash</code> 免费）；输出格式同样跟随「输出模式」。</p>
+
+    <hr>
+
+    <!-- ========== 十、隐私说明 ========== -->
+    <h2 id="privacy">十、隐私说明</h2>
+
+    <p>AI 模式下，以下内容会被发送到<strong>你自己填写的 AI 服务地址</strong>：</p>
+    <ul>
+      <li>题干、选项</li>
+      <li><strong>阅读材料</strong>（阅读理解 / 完形填空的原文，最长 6000 字）</li>
+      <li>框选截图（截图解题时）</li>
+    </ul>
+
+    <div class="callout callout-info">
+      <div class="callout-title">题库匹配不联网</div>
+      只有 AI 模式下才会外发数据；纯题库匹配完全离线。
+    </div>
+
+    <p>API Key 只保存在本机浏览器里，不会发给除该地址以外的任何地方。</p>
+
+    <div class="callout callout-success">
+      <div class="callout-title">不会外发</div>
+      整页内容、表单里的其他字段、密码框内容。
+    </div>
+
+  </main>
+</div>
+
+<script>
+// 滚动时高亮当前章节
+(function() {
+  var links = document.querySelectorAll('.toc a');
+  var sections = [];
+  links.forEach(function(a) {
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if (el) sections.push({ link: a, el: el });
+  });
+
+  function update() {
+    var current = null;
+    for (var i = 0; i < sections.length; i++) {
+      if (sections[i].el.getBoundingClientRect().top <= 100) current = sections[i];
+    }
+    links.forEach(function(a) { a.classList.remove('active'); });
+    if (current) current.link.classList.add('active');
+  }
+
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+})();
+</script>
+
+</body>
+</html>
