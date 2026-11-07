@@ -331,6 +331,27 @@ class Element extends Node {
   }
   get outerHTML() { return serialize(this); }
   append(...nodes) { nodes.forEach((n) => this.appendChild(n)); }
+  // 真实 DOM 的 Element 都有这个方法，content.js 用它挂"含图片材料""未挂上材料"等警告 chip。
+  // 桩早期没实现，本地因该分支未命中而没暴露；CI（Linux + 不同 DOM 解析路径）
+  // 会走到这里并抛 "tags.insertAdjacentHTML is not a function"。
+  insertAdjacentHTML(position, html) {
+    const doc = this.ownerDocument;
+    const tmp = doc.createElement("div");
+    tmp.innerHTML = String(html == null ? "" : html);
+    const nodes = tmp.childNodes.slice();
+    const pos = String(position).toLowerCase();
+    if (pos === "beforeend") {
+      nodes.forEach((n) => this.appendChild(n));
+    } else if (pos === "afterbegin") {
+      const ref = this.childNodes[0] || null;
+      nodes.forEach((n) => this.insertBefore(n, ref));
+    } else if (pos === "beforebegin" || pos === "afterend") {
+      const parent = this.parentNode;
+      if (!parent) return;
+      const ref = pos === "beforebegin" ? this : this.nextSibling;
+      nodes.forEach((n) => parent.insertBefore(n, ref));
+    }
+  }
   prepend(...nodes) {
     const ref = this.childNodes[0] || null;
     nodes.forEach((n) => this.insertBefore(n, ref));
