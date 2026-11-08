@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "QuizLens 练习助手",
-  "version": "1.7.8",
+  "version": "1.7.9",
   "minimum_chrome_version": "103",
   "description": "在答题网页上识别题目并自动填涂，支持题库匹配与 AI 作答；只填答案，不替你交卷。请遵守所在平台的使用规则。",
   "permissions": [
