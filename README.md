@@ -21,12 +21,13 @@
 
 | 路径 | 说明 |
 |---|---|
+| **[`docs/安装教程.md`](docs/安装教程.md)** | **从零开始的安装教程**。没装过浏览器扩展、不知道选哪个文件夹、看到报错不认识——先看这个 |
 | [`extension/`](extension) | **插件本体**。在浏览器扩展管理页里「加载已解压的扩展程序」选这个目录即可。零依赖，不需要 `npm install` |
 | [`extension/BANK.md`](extension/BANK.md) | **题库安装教程**。题库不随仓库分发，看这个文件装 |
 | [`extension/docs/`](extension/docs) | 插件内使用说明（含图文教程），弹窗底部可直达 |
 | [`quiz-app/`](quiz-app) | **配套练习页**：单文件网页版答题界面（`index.html` + `questions.json`），`start.bat` 一键起本地服务。它同时是 e2e 测试的夹具 |
 | [`tools/`](tools) | **构建与测试脚本**，不参与插件运行：`build_bank.py` 等做题库转换，`extension-test/` 是 29 个 Playwright e2e 用例，`shim/` 是 19 个零依赖单测（chrome API 桩），`ceval-import/` 负责 C-Eval 导入 |
-| [`docs/`](docs) | 仓库文档：题库来源与许可说明等 |
+| [`docs/`](docs) | 仓库文档：安装教程、题库来源与许可说明等 |
 | [`PRIVACY.md`](PRIVACY.md) | 隐私说明：收集什么、发到哪、怎么删 |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | 贡献指南：工程约定、测试怎么跑、哪些数据不能提交 |
 | [`CHANGELOG.md`](CHANGELOG.md) | 版本变更记录 |
@@ -46,6 +47,9 @@
 - 适配问卷星、学习通/超星（新版随堂练习与旧版作业）以及常见表单式答题页。
 
 ## 安装
+
+> **完全没装过浏览器扩展？** 看 [安装教程（从零开始）](docs/安装教程.md)。
+> 里面有解压后的目录对照图、Edge 与 Chrome 的按钮位置差异、常见报错的原文与对应解法，以及卸载和更新步骤。
 
 1. 用 Chrome 或 Edge 打开扩展管理页：`chrome://extensions`（Edge 为 `edge://extensions`）。
 2. 打开右上角的「开发者模式」。
