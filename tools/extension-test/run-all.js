@@ -20,6 +20,7 @@ const TESTS = [
   ["chaoxing-legacy-test.js", "学习通旧版作业/章节测验：.questionLi/.TiMu、多选、多空填空"],
   ["chaoxing-new-exam-test.js", "学习通新版：.option-list + 已选保留 / 覆盖开关 / 多选清勾"],
   ["chaoxing-new-blank-test.js", "学习通新版：填空 / textarea / contenteditable 简答 / 多空"],
+  ["chaoxing-ueditor-test.js", "学习通作业简答（UEditor）：识别 / 文字作答 / 写 iframe body / 同步 textarea"],
   ["iframe-pagination-test.js", "同源 iframe 内自动翻页：iframe 里的「下一题」也能点"],
   ["fillblank-test.js", "填空题：识别 / 写入 / 受控组件 / 不误伤表单"],
   ["sentence-rewrite-test.js", "句子改写/改错：自由文本 AI 答案、写入输入框、自动答题也覆盖"],

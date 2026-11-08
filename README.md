@@ -26,7 +26,7 @@
 | [`extension/BANK.md`](extension/BANK.md) | **题库安装教程**。题库不随仓库分发，看这个文件装 |
 | [`extension/docs/`](extension/docs) | 插件内使用说明（含图文教程），弹窗底部可直达 |
 | [`quiz-app/`](quiz-app) | **配套练习页**：单文件网页版答题界面（`index.html` + `questions.json`），`start.bat` 一键起本地服务。它同时是 e2e 测试的夹具 |
-| [`tools/`](tools) | **构建与测试脚本**，不参与插件运行：`build_bank.py` 等做题库转换，`extension-test/` 是 29 个 Playwright e2e 用例，`shim/` 是 19 个零依赖单测（chrome API 桩），`ceval-import/` 负责 C-Eval 导入 |
+| [`tools/`](tools) | **构建与测试脚本**，不参与插件运行：`build_bank.py` 等做题库转换，`extension-test/` 是 30 个 Playwright e2e 用例，`shim/` 是 19 个零依赖单测（chrome API 桩），`ceval-import/` 负责 C-Eval 导入 |
 | [`docs/`](docs) | 仓库文档：安装教程、题库来源与许可说明等 |
 | [`PRIVACY.md`](PRIVACY.md) | 隐私说明：收集什么、发到哪、怎么删 |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | 贡献指南：工程约定、测试怎么跑、哪些数据不能提交 |

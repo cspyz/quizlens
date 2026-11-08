@@ -12,7 +12,7 @@
  * 这样"答案被解析劫持""单选回了两个字母""慢接口下按标签页中断"都能确定复现。
  *
  * 跑法（playwright 与 chromium 都在 .pw-deps 里）：
- *   PLAYWRIGHT_NODE_PATH=D:/browser-extension/.pw-deps/node_modules node tools/extension-test/real-fixes-test.js
+ *   PLAYWRIGHT_NODE_PATH=D:/111111/.pw-deps/node_modules node tools/extension-test/real-fixes-test.js
  */
 const H = require("./harness");
 const { chromium } = H.ensurePlaywright();

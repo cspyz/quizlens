@@ -730,9 +730,12 @@
     // 选项一多（A~H 共 8 个）时"答案：ABCDEFGH"这种全选会被截成前 6 个，
     // 多选题直接漏勾最后两个。上限取 limit-64+1 即选项总数。
     const RUN_MAX = Math.min(26, Math.max(4, optionCount || 4));
+    // 每个候选字母后面必须不是拉丁字母/数字，否则 "答案：Docker…" 里的 D、
+    // "答案：CPU…" 里的 C 会被当成选项。连写多选（AC / ABC）仍由前面的
+    // 连续串分支整体匹配，后面再跟单词边界检查。
     const re = new RegExp(
-      `[A-${limit}]{2,${RUN_MAX}}` +                     // "AC" / "ABCDEFGH"
-      `|[A-${limit}](?:${SEP}[A-${limit}])*`,            // "A、C、D" / "A, C" / "A和C" / "A C" / "A 与 C"
+      `[A-${limit}]{2,${RUN_MAX}}(?![A-Za-z0-9])` +     // "AC" / "ABCDEFGH"
+      `|[A-${limit}](?![A-Za-z0-9])(?:${SEP}[A-${limit}](?![A-Za-z0-9]))*`, // "A、C、D" / "A, C" / "A和C" / "A C" / "A 与 C"
       "g");
     const runOf = s => ((String(s).match(re) || [])[0] || "");   // 只看第一段，后面的字母都是解释
     const toIdx = s => [...new Set(String(s).match(new RegExp(`[A-${limit}]`, "g")) || [])]
@@ -795,7 +798,7 @@
     // 这里的连写串上限同样要跟随选项数（与上面 re 的 RUN_MAX 同一个理由）：
     // 写死 {2,6} 会让"故选 ABCDEFGH"这种 8 选项全选只取到前 6 个。
     const cueRe = new RegExp(
-      `(?<!不)\\s*(?:(?<!因)为|是|(?<!候)选|应选|answer)\\s*[:：]?\\s*([A-${limit}]{2,${RUN_MAX}}|[A-${limit}](?:${SEP}[A-${limit}])*)`,
+      `(?<!不)\\s*(?:(?<!因)为|是|(?<!候)选|应选|answer)\\s*[:：]?\\s*([A-${limit}]{2,${RUN_MAX}}(?![A-Za-z0-9])|[A-${limit}](?![A-Za-z0-9])(?:${SEP}[A-${limit}](?![A-Za-z0-9]))*)`,
       "gi");
     const NEGATED = /不对|不是|不选|并非|错误|排除/;
 
@@ -1064,6 +1067,8 @@
       ? "只输出改写后的完整句子：保持原意，按题目要求变换语态、句型或时态；不要题号、不要解释、不要引号，就一行。"
       : freeKind === "correct"
         ? "只输出改正后的完整句子：找出并改正句中的错误；不要题号、不要解释、不要引号，就一行。"
+        : freeKind === "essay"
+          ? "只输出应该写下的完整答案正文：可以分多段，保留条目与换行；不要题号、不要选项字母、不要解释、不要引号。"
         : freeKind
           ? "只输出应该写下的完整答案：不要题号、不要解释、不要引号，就一行。"
           : "";
@@ -1090,6 +1095,7 @@
     const lead = freeKind
       ? (freeKind === "rewrite" ? "用户给的是一道句子改写题。"
         : freeKind === "correct" ? "用户给的是一道改错题。"
+        : freeKind === "essay" ? "用户给的是一道简答题。"
         : "用户给的是一道文字作答题。")
       : "用户给的是一道填空题。";
     const systemContent = "你是答题助手。" + lead + rule +
@@ -1121,7 +1127,7 @@
       const numbered = lines.filter(l => /^\s*(?:第\s*)?\d{1,3}\s*(?:空|题)?\s*[.、．)）:：]\s*(?!\d)\S/.test(l));
       if (numbered.length >= n) body = numbered.join("\n");
     }
-    const texts = cleanFillTexts(body, n);
+    const texts = freeKind === "essay" ? cleanEssayTexts(body) : cleanFillTexts(body, n);
     if (!looksLikeRefusal(texts.join(" "))) {
       return {
         texts, raw, explain: parts.explain,
@@ -1159,7 +1165,7 @@
         const numbered2 = lines2.filter(l => /^\s*(?:第\s*)?\d{1,3}\s*(?:空|题)?\s*[.、．)）:：]\s*(?!\d)\S/.test(l));
         if (numbered2.length >= n) body2 = numbered2.join("\n");
       }
-      const texts2 = cleanFillTexts(body2, n);
+      const texts2 = freeKind === "essay" ? cleanEssayTexts(body2) : cleanFillTexts(body2, n);
       if (!looksLikeRefusal(texts2.join(" "))) {
         return {
           texts: texts2, raw: raw2, explain: parts2.explain,
@@ -1192,6 +1198,16 @@
   // 同理 "2、3"（一个空里填两个数）不能被当成"第 2 空"。
   const ANSWER_HEAD = /^\s*(?:正确答案|答案|应选|填空答案|答)\s*(?:是|为|[:：])\s*/;
   const NUMBER_HEAD = /^\s*(?:第\s*)?\d{1,3}\s*(?:空|题)?\s*[.、．)）:：]\s*(?!\d)/;
+  // 简答/论述：答案可能有多段，不能按“单个空只取第一行”截断。
+  // 只剥掉行首的「答案：」标记和代码围栏，保留段落与换行。
+  function cleanEssayTexts(text) {
+    let s = String(text || "").trim();
+    if (!s) return [];
+    s = s.replace(ANSWER_HEAD, "").trim();
+    s = s.replace(/^```[a-zA-Z0-9_-]*\s*/, "").replace(/\s*```\s*$/, "").trim();
+    return s ? [s] : [];
+  }
+
   function cleanFillTexts(text, n) {
     const lines = String(text || "").split(/\n+/)
       .map(s => s.trim())
@@ -1216,6 +1232,23 @@
   // 不回读就会报成"已填涂"而框里其实是空的。回读不符时不记成功，
   // 但仍记 filledEls —— 同一个值再写一遍也还是同样结果，别浪费请求；
   // 只是从此如实说"这一空要手动填"。
+  // UEditor 旁边那个隐藏 textarea 是提交时表单真正读走的值。
+  // 直接改 iframe body 不一定触发 UEditor 自己的 sync，所以两边都写一份。
+  function syncBlankTarget(q, i, text) {
+    const target = (q.blankSyncTargets || [])[i];
+    if (!target || !text) return;
+    try {
+      const win = winOf(target);
+      const proto = target.tagName === "TEXTAREA" ? win.HTMLTextAreaElement.prototype : win.HTMLInputElement.prototype;
+      Object.getOwnPropertyDescriptor(proto, "value").set.call(target, text);
+    } catch (_) {
+      try { target.value = text; } catch (_) {}
+    }
+    const w = winOf(target);
+    target.dispatchEvent(new w.Event("input", { bubbles: true }));
+    target.dispatchEvent(new w.Event("change", { bubbles: true }));
+  }
+
   function fillBlankTexts(q, texts) {
     const inputs = q.blankInputs || [];
     if (!inputs.length || !texts || !texts.length) return 0;
@@ -1223,23 +1256,35 @@
     inputs.forEach((el, i) => {
       const text = texts[i];
       if (!el || !text) return;
-      if (writtenOk.has(el)) { n++; return; }        // 上一轮回读确认过：不重写、不重问
+      if (writtenOk.has(el)) { syncBlankTarget(q, i, text); n++; return; } // 上一轮回读确认过：不重写、不重问
       if (filledEls.has(el)) return;                 // 写过但页面没接住：不重复写同一个值
       if (el.isContentEditable) {
-        try { el.focus(); el.textContent = text; } catch (_) {}
-        if (String(el.textContent || "").trim() !== String(text).trim()) {
-          try { el.innerText = text; } catch (_) {}
+        // 多段答案按段落写进去：direct textContent 会把换行压成一行，
+        // UEditor.getContent() 读到的也就不是用户看到的排版。
+        const html = String(text).split(/\r?\n/)
+          .map(line => `<p>${line ? escapeHtml(line) : "<br>"}</p>`).join("");
+        try {
+          el.focus();
+          el.innerHTML = html;
+        } catch (_) {
+          try { el.textContent = text; } catch (_) {}
         }
         const w = winOf(el);
-        el.dispatchEvent(new w.Event("input", { bubbles: true }));
+        try {
+          el.dispatchEvent(new w.InputEvent("input", { bubbles: true, inputType: "insertText", data: text }));
+        } catch (_) {
+          el.dispatchEvent(new w.Event("input", { bubbles: true }));
+        }
         el.dispatchEvent(new w.Event("change", { bubbles: true }));
         filledEls.add(el);
-        if (String(el.textContent || "").trim() === String(text).trim()) {
+        // 富文本会包 <p>，textContent 不再逐字相等；按去掉空白后的内容核对。
+        if (String(el.textContent || "").replace(/\s+/g, "") === String(text).replace(/\s+/g, "")) {
           writtenOk.add(el);
           n++;
         } else {
           log(`[失败] 富文本作答框没有接住「${text}」，请手动填写`, "var(--c-danger)");
         }
+        syncBlankTarget(q, i, text);
         return;
       }
       try {
@@ -5277,6 +5322,25 @@
   // 选项不是 radio；选中态由点击 .answerBg 后的 .checkanswer/.checkanswerdx 维护。
   // 通用规则要求「字母和文字在同一个元素的 textContent 里」，而这里字母与文字
   // 分处两个 span，且选项文字常以英文开头（select… / ORDER BY…），通用规则配不上。
+  // 学习通简答题的正文在 UEditor 的同源 iframe 里（body[contenteditable]），
+  // 旁边的 textarea 是 display:none，提交时才由 UEditor 回写。
+  // 页面上常残留 0×0 的重复 editor 实例，必须按实际尺寸挑可见的那个。
+  function findUeditorIn(box) {
+    for (const frame of box.querySelectorAll('iframe[id^="ueditor_"], .edui-editor iframe')) {
+      if (!visibleEl(frame)) continue;
+      const r = frame.getBoundingClientRect();
+      if (r.width < 20 || r.height < 20) continue;
+      let doc = null;
+      try { doc = frame.contentDocument; } catch (_) { continue; }
+      if (!doc) continue;
+      const body = doc.querySelector('body[contenteditable="true"], [contenteditable="true"]');
+      if (!body) continue;
+      const textarea = box.querySelector('textarea[id^="answer"], textarea[name^="answer"]');
+      return { frame, body, textarea };
+    }
+    return null;
+  }
+
   // 老版 .questionLi + .Zy_ulTop li 也一并收，原生 radio 仍交给 inputs 路径。
   function scanChaoxing() {
     const out = [];
@@ -5293,7 +5357,8 @@
       // .question-item/.top-question 是很常见的通用类名：没有学习通专属选项结构时不接，
       // 交给通用扫描器，避免在普通问卷/文章页上误判。
       const knownCx = /(^|\s)(singleQuesId|questionLi|TiMu)(\s|$)/.test(String(box.className || ""));
-      if (!knownCx && !cxOptions) continue;
+      const ueditor = !!box.querySelector('iframe[id^="ueditor_"]');
+      if (!knownCx && !cxOptions && !ueditor) continue;
       let stem = stemEl ? stemEl.textContent : "";
       if (!normText(stem)) {
         // 新随堂练习没有单独题干元素：从容器文本里排除选项/输入框后取剩余部分
@@ -5405,6 +5470,23 @@
           options: [],
           optionTexts: [],
           blankInputs: blanks
+        });
+        continue;
+      }
+
+      // UEditor 简答：可见 iframe 的 contenteditable body 才是真正的作答区。
+      const ue = findUeditorIn(box);
+      if (ue) {
+        out.push({
+          ...base,
+          fillText: true,
+          freeText: true,
+          freeTextKind: "essay",
+          inputs: [],
+          options: [],
+          optionTexts: [],
+          blankInputs: [ue.body],
+          blankSyncTargets: ue.textarea ? [ue.textarea] : []
         });
       }
     }
